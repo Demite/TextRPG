@@ -14,6 +14,8 @@ public abstract class ItemBase
     public string ItemName { get; set; }
     public string DescriptionShort { get; set; }
     public string DescriptionLong { get; set; }
+    public int MaxStack = 10;
+    public int currentStack = 1;
     public float Weight { get; set; }
     public float value { get; set; }
     public ItemType itemType { get; set; }

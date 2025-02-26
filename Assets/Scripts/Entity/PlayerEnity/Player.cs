@@ -6,6 +6,7 @@ using UnityEngine.Tilemaps;
 
 public class Player : PlayerBase
 {
+    public Inventory Inventory;
     public GameObject playerInfoPanel;
     public TMP_Text playerInfoText;
     private WorldData worldData;
@@ -38,6 +39,7 @@ public class Player : PlayerBase
     {
         // Cache the WorldDisplay from the Game_Manager instance.
         worldDisplay = Game_Manager.Instance.worldDisplay;
+        Inventory = new Inventory(20);
         if (worldDisplay == null)
         {
             Debug.LogError("WorldDisplay not found!");
@@ -263,8 +265,12 @@ public class Player : PlayerBase
             {
                 if (!tile.IsTransversable)
                 {
-                    Debug.Log($"Tile at ({newPos.x},{newPos.y}) is not traversable.");
-                    return;
+                    if (tile.IsOccupiedByFoliage && tile.foliage != null)
+                    {
+                        return;
+                    }
+                    else
+                        return;
                 }
             }
             else

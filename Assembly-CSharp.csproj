@@ -65,7 +65,6 @@
     <Compile Include="Assets\Scripts\Entity\AnimalsEntities\Rabbit.cs" />
     <Compile Include="Assets\Scripts\System\GameSettings.cs" />
     <Compile Include="Assets\Scripts\World\TileAttributes\CliffEdge.cs" />
-    <Compile Include="Assets\Scripts\Inventory\Inventory.cs" />
     <Compile Include="Assets\Scripts\System\Ticker.cs" />
     <Compile Include="Assets\Scripts\Items\ItemBase.cs" />
     <Compile Include="Assets\Scripts\World\WorldData.cs" />
@@ -83,6 +82,7 @@
     <Compile Include="Assets\Scripts\World\Kingdom\KingdomTiles\Farm.cs" />
     <Compile Include="Assets\Scripts\World\TileAttributes\ITileAttribute.cs" />
     <Compile Include="Assets\Scripts\System\Game_Manager.cs" />
+    <Compile Include="Assets\Scripts\System\Inventory\Inventory.cs" />
     <Compile Include="Assets\Scripts\Display\DIsplay.cs" />
     <Compile Include="Assets\Scripts\System\Turn_Manager.cs" />
     <Compile Include="Assets\Scripts\World\Generation\ImprovedNoise.cs" />
@@ -91,7 +91,9 @@
     <Compile Include="Assets\Scripts\Display\ChatBox\LogBase.cs" />
     <Compile Include="Assets\Scripts\World\Kingdom\KingdomBase.cs" />
     <Compile Include="Assets\Scripts\World\Tiles\TileEnums.cs" />
+    <Compile Include="Assets\Scripts\System\Targetting\InteractionClicker.cs" />
     <Compile Include="Assets\Scripts\World\Tiles\LevelTile.cs" />
+    <Compile Include="Assets\Scripts\Display\InventoryDisplays\PlayerInventoryDisplay.cs" />
     <Compile Include="Assets\Scripts\Display\DisplayPanels.cs" />
     <Compile Include="Assets\Scripts\Entity\EntityBase.cs" />
     <Compile Include="Assets\Scripts\World\Generation\WorldGen.cs" />

@@ -23,6 +23,7 @@ public class Game_Manager : MonoBehaviour
     public WorldGen worldGen;
     public LevelGen levelGen;
     public SpellTargetting spellTargetting;
+    public ChatLog chatLog;
     public bool GameGenerated = false;
     public bool WorldGenStarted = false;
     private bool GameSetup = false;
@@ -47,6 +48,7 @@ public class Game_Manager : MonoBehaviour
         WorldRegions = new List<WorldRegions>();
         TownsInGame = new List<TownBase>();
         EntitiesInLevel = new List<IEntity>();
+        chatLog = ChatLog.Instance;
 
         if (Instance == null)
         {
