@@ -1,0 +1,62 @@
+public enum EntityRace
+{
+    None,
+    Human,
+    Elf,
+    Dwarf,
+    Orc,
+    Goblin,
+    Troll,
+    Ogre,
+    Gnome,
+    Halfling,
+    Undead,
+    Demon,
+    Dragon,
+    Beast,
+    Elemental,
+    Construct,
+    Plant,
+    Insect,
+    Aberration,
+    Celestial,
+    Fey,
+    Fiend,
+    Giant
+}
+public enum EntityGender
+{
+    None,
+    Male,
+    Female
+}
+public enum EnitityType
+{
+    None,
+    Animal,
+    Humanoid,
+    Monstrous,
+    Undead,
+    Demon,
+    Dragon,
+    Beast,
+    Construct,
+    Elemental,
+    Plant,
+    Insect,
+    Aberration,
+    Celestial,
+    Fey,
+    Fiend,
+    Giant,
+    Monstrosity,
+    Ooze,
+    Vermin
+}
+public enum StarterClass
+{
+    Fighter,
+    SpellCaster,
+    Ranger,
+    None
+}
