@@ -197,10 +197,10 @@ public class WorldGen : MonoBehaviour
             amountGenerated++;
             return;
         }
-        WorldTilePos tile = FindSuitablePOITile(min, max, townOwner);
+        WorldTilePos? tile = FindSuitablePOITile(min, max, townOwner);
         if (tile != null)
         {
-            Mine mine = new Mine("Mine", 10, 10, townOwner, tile);
+            Mine mine = new Mine("Mine", 10, 10, townOwner, tile.Value);
             amountGenerated++;
         }
         Debug.Log("Mines generated: " + amountGenerated + " AA3");
@@ -234,19 +234,19 @@ public class WorldGen : MonoBehaviour
                     int adjustedMax = max * 4;
                     Debug.Log($"Orignal Min: {min} Adjusted {adjustedMin}, Max: {max} Adjusted {adjustedMax}");
                     Debug.Log("Farm attempting to be generated in The Desert or Snow. FFF1");
-                    WorldTilePos tile = FindSuitablePOITile(adjustedMin, adjustedMax, townOwner, new WorldTile.WorldTileType[] { WorldTile.WorldTileType.Snow, WorldTile.WorldTileType.Desert });
+                    WorldTilePos? tile = FindSuitablePOITile(adjustedMin, adjustedMax, townOwner, new WorldTile.WorldTileType[] { WorldTile.WorldTileType.Snow, WorldTile.WorldTileType.Desert });
                     if (tile != null)
                     {
-                        Farm farm = new Farm("Farm", townOwner, tile);
+                        Farm farm = new Farm("Farm", townOwner, tile.Value);
                         Debug.Log("Farm Generated FFF1 " + townOwner.TownName);
                     }
                 }
                 else
                 {
-                    WorldTilePos tile = FindSuitablePOITile(min, max, townOwner);
+                    WorldTilePos? tile = FindSuitablePOITile(min, max, townOwner);
                     if (tile != null)
                     {
-                        Farm farm = new Farm("Farm", townOwner, tile);
+                        Farm farm = new Farm("Farm", townOwner, tile.Value);
                         Debug.Log("Farm Generated FFF1 " + townOwner.TownName);
                     }
                 }
@@ -328,7 +328,7 @@ public class WorldGen : MonoBehaviour
     /// <summary>
     /// Finds a suitable tile (POI) for placing a mine.
     /// </summary>
-    private WorldTilePos FindSuitablePOITile(int distanceMin, int distanceMax, TownBase owner)
+    private WorldTilePos? FindSuitablePOITile(int distanceMin, int distanceMax, TownBase owner)
     {
         const int maxAttempts = 100; // Limit to prevent infinite loops
         for (int attempt = 0; attempt < maxAttempts; attempt++)
@@ -337,15 +337,15 @@ public class WorldGen : MonoBehaviour
             // if (attempt % 10 == 0)
             //     Game_Manager.Instance.displayPanels.UpdateLoadingText($"Finding POI tile (Attempt {attempt + 1}/{maxAttempts})");
 
-            WorldTilePos tile = GetRandomTileAway(owner.TownLocation, distanceMax);
+            WorldTilePos? tile = GetRandomTileAway(owner.TownLocation, distanceMax);
             if (tile == null)
             {
                 continue; // Skip null tiles.
             }
 
-            if (IsSuggestionTownTileXAway(distanceMin, Game_Manager.Instance.TownsInGame.ToArray(), tile))
+            if (IsSuggestionTownTileXAway(distanceMin, Game_Manager.Instance.TownsInGame.ToArray(), tile.Value))
             {
-                return tile;
+                return tile.Value;
             }
         }
 
@@ -355,19 +355,19 @@ public class WorldGen : MonoBehaviour
     /// <summary>
     /// Finds a suitable tile (POI) for placing a mine.
     /// </summary>
-    private WorldTilePos FindSuitablePOITile(int distanceMin, int distanceMax, TownBase owner, WorldTile.WorldTileType[] RejectTypes)
+    private WorldTilePos? FindSuitablePOITile(int distanceMin, int distanceMax, TownBase owner, WorldTile.WorldTileType[] RejectTypes)
     {
         Debug.Log($"Finding POI tile for {owner.TownName} that is {distanceMin} and {distanceMax} away. FFF1");
         const int maxAttempts = 100; // Limit to prevent infinite loops
         for (int attempt = 0; attempt < maxAttempts; attempt++)
         {
-            WorldTilePos tile = GetRandomTileAway(owner.TownLocation, distanceMax);
+            WorldTilePos? tile = GetRandomTileAway(owner.TownLocation, distanceMax);
             if (tile == null)
             {
                 continue; // Skip null tiles.
             }
 
-            if (worldData.WorldTileData.TryGetValue(tile, out WorldTile t))
+            if (worldData.WorldTileData.TryGetValue(tile.Value, out WorldTile t))
             {
                 if (t.POI == WorldTile.POIType.Road || t.POI == WorldTile.POIType.Town || t.POI == WorldTile.POIType.Mine || t.POI == WorldTile.POIType.Farm)
                 {
@@ -389,15 +389,15 @@ public class WorldGen : MonoBehaviour
                     {
                         continue;
                     }
-                    if (IsSuggestionTownTileXAway(distanceMin, Game_Manager.Instance.TownsInGame.ToArray(), tile))
+                    if (IsSuggestionTownTileXAway(distanceMin, Game_Manager.Instance.TownsInGame.ToArray(), tile.Value))
                     {
-                        return tile;
+                        return tile.Value;
                     }
                 }
 
-                if (IsSuggestionTownTileXAway(distanceMin, Game_Manager.Instance.TownsInGame.ToArray(), tile))
+                if (IsSuggestionTownTileXAway(distanceMin, Game_Manager.Instance.TownsInGame.ToArray(), tile.Value))
                 {
-                    return tile;
+                    return tile.Value;
                 }
             }
         }
@@ -454,7 +454,7 @@ public class WorldGen : MonoBehaviour
     /// <summary>
     /// Returns a random tile away from an initial position, given a maximum distance.
     /// </summary>
-    private WorldTilePos GetRandomTileAway(WorldTilePos initial, int distance, int regionCount)
+    private WorldTilePos? GetRandomTileAway(WorldTilePos initial, int distance, int regionCount)
     {
         BlackListedTiles.Clear();
         int maxRetries = 15 * regionCount;
@@ -494,7 +494,7 @@ public class WorldGen : MonoBehaviour
     /// <summary>
     /// Returns a random tile away from an initial position.
     /// </summary>
-    private WorldTilePos GetRandomTileAway(WorldTilePos initial, int distance)
+    private WorldTilePos? GetRandomTileAway(WorldTilePos initial, int distance)
     {
         BlackListedTiles.Clear();
         int maxRetries = 15;

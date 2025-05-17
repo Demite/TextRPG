@@ -140,7 +140,7 @@ public class Game_Manager : MonoBehaviour
         if (worldData == null)
         {
             Debug.LogError("WorldData reference is missing.");
-            return null;
+            return new WorldTilePos(0, 0);
         }
         foreach (var tile in worldData.WorldTileData)
         {
@@ -154,7 +154,7 @@ public class Game_Manager : MonoBehaviour
         if (tilesList.Count == 0)
         {
             Debug.LogError("No suitable tiles found for player spawn.");
-            return null;
+            return new WorldTilePos(0, 0);
         }
         int randomTile = Random.Range(0, tilesList.Count);
         return tilesList[randomTile];
