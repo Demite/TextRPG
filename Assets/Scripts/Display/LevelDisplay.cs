@@ -25,83 +25,54 @@ public class LevelDisplay : Display
     {
         if (Game_Manager.Instance.player.IsInLevel)
         {
-            StringBuilder worldBuilder = new StringBuilder();
-
-            for (int row = 0; row < rows; row++)
-            {
-                for (int col = 0; col < columns; col++)
+            BuildDisplay<LevelPOS>(
+                (x, y) => new LevelPOS(x, y),
+                pos =>
                 {
-                    int worldX = currentViewPos.x + col;
-                    int worldY = currentViewPos.y + row;
-                    LevelPOS posKey = new LevelPOS(worldX, worldY);
-
-                    string displayChar = " "; // default
-
-                    if (worldData.ActiveLevelData.TryGetValue(posKey, out LevelTile tile))
+                    if (LeveltileOverrides.TryGetValue(pos, out string ov))
+                        return ov;
+                    if (worldData.ActiveLevelData.TryGetValue(pos, out LevelTile tile))
                     {
-                        // Use an override if available.
-                        if (LeveltileOverrides.TryGetValue(posKey, out string overrideDisplay))
+                        if (tile.IsOccupiedByEnitiy)
                         {
-                            displayChar = overrideDisplay;
+                            return $"<color={tile.entity.entitySymbolColor}>{tile.entity.EntitySymbol}</color>";
+                        }
+                        else if (tile.IsOccupiedByFoliage)
+                        {
+                            return $"<color={tile.foliage.SymbolColor}>{tile.foliage.Symbol}</color>";
+                        }
+                        else if (tile.IsOccupiedByAttribute)
+                        {
+                            return $"<color={tile.attribute.SymbolColor}>{tile.attribute.Symbol}</color>";
+                        }
+                        else if (tile.IsOccupiedByBuilding)
+                        {
+                            switch (tile.BuildingPart)
+                            {
+                                case BuildingPart.Wall:
+                                    return $"<color={tile.Building.WallColor}>{tile.Building.BuildWallSymbol}</color>";
+                                case BuildingPart.Door:
+                                    return $"<color={tile.Building.DoorColorClosedColor}>{tile.Building.BuildDoorSymbol}</color>";
+                                case BuildingPart.Floor:
+                                    return $"<color={tile.Building.BuildingFloorColor}>{tile.Building.BuildFloorSymbol}</color>";
+                                case BuildingPart.Stairs:
+                                    return $"<color={tile.Building.StairsColor}>{tile.Building.BuildingStairsSymbol}</color>";
+                                default:
+                                    return $"<color={tile.Building.BuildingFloorColor}>{tile.Building.BuildFloorSymbol}</color>";
+                            }
                         }
                         else
                         {
-                            // If an entity is on the tile, show its symbol.
-                            if (tile.IsOccupiedByEnitiy)
-                            {
-                                displayChar = $"<color={tile.entity.entitySymbolColor}>{tile.entity.EntitySymbol}</color>";
-                            }
-                            else if (tile.IsOccupiedByFoliage)
-                            {
-                                displayChar = $"<color={tile.foliage.SymbolColor}>{tile.foliage.Symbol}</color>";
-                            }
-                            else if (tile.IsOccupiedByAttribute)
-                            {
-                                displayChar = $"<color={tile.attribute.SymbolColor}>{tile.attribute.Symbol}</color>";
-                            }
-                            else if (tile.IsOccupiedByBuilding)
-                            {
-                                switch (tile.BuildingPart)
-                                {
-                                    case BuildingPart.Wall:
-                                        displayChar = $"<color={tile.Building.WallColor}>{tile.Building.BuildWallSymbol}</color>";
-                                        break;
-                                    case BuildingPart.Door:
-                                        displayChar = $"<color={tile.Building.DoorColorClosedColor}>{tile.Building.BuildDoorSymbol}</color>";
-                                        break;
-                                    case BuildingPart.Floor:
-                                        displayChar = $"<color={tile.Building.BuildingFloorColor}>{tile.Building.BuildFloorSymbol}</color>";
-                                        break;
-                                    case BuildingPart.Stairs:
-                                        displayChar = $"<color={tile.Building.StairsColor}>{tile.Building.BuildingStairsSymbol}</color>";
-                                        break;
-                                    default:
-                                        displayChar = $"<color={tile.Building.BuildingFloorColor}>{tile.Building.BuildFloorSymbol}</color>";
-                                        break;
-                                }
-                            }
-                            else
-                            {
-                                displayChar = GetTileDisplay(tile);
-                            }
+                            return GetTileDisplay(tile);
                         }
                     }
-
-                    worldBuilder.Append(displayChar);
-                }
-                if (row < rows - 1)
-                {
-                    worldBuilder.AppendLine();
-                }
-            }
-
-            DisplayText.text = worldBuilder.ToString();
+                    return " ";
+                });
 
             // For debugging: count rows and columns.
             int rowCount, maxColumns;
             DisplayUtilities.CountRowsAndColumns(DisplayText.text, out rowCount, out maxColumns);
             Debug.Log($"Display built with {rowCount} rows and a maximum of {maxColumns} columns.");
-
         }
     }
 }

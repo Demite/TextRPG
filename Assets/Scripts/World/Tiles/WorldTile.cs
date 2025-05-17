@@ -60,6 +60,9 @@ public class WorldTile
     public float MonsterDensity { get; set; }
     public float ResourceDensity { get; set; }
 
+    // Cached display string for rendering performance
+    public string BaseDisplayString { get; private set; }
+
     public WorldTile(int x, int y, WorldTileType tileType = WorldTileType.Ground)
     {
         TileX = x;
@@ -86,6 +89,8 @@ public class WorldTile
         {
             Features.Add("Snow");
         }
+
+        UpdateBaseDisplayString();
     }
     /// <summary>
     /// Gets the Density of the tile and returns it as a percentage in a string.
@@ -115,6 +120,61 @@ public class WorldTile
         TownOnTile = town;
     }
 
+    public void UpdateBaseDisplayString()
+    {
+        if (IsPOI || IsRoad)
+        {
+            switch (POI)
+            {
+                case POIType.Mine:
+                    BaseDisplayString = $"<color={TextAtlas.Mine}>{TextAtlas.mineChar}</color>";
+                    break;
+                case POIType.AbandonedMine:
+                    BaseDisplayString = $"<color={TextAtlas.AbandonMine}>{TextAtlas.abandonedMineChar}</color>";
+                    break;
+                case POIType.Farm:
+                    BaseDisplayString = $"<color={TextAtlas.Farm}>{TextAtlas.farmChar}</color>";
+                    break;
+                case POIType.Town:
+                    BaseDisplayString = $"<color={TextAtlas.Town}>{TextAtlas.townChar}</color>";
+                    break;
+                case POIType.Road:
+                    BaseDisplayString = $"<color={TextAtlas.Road}>{TextAtlas.roadChar}</color>";
+                    break;
+                case POIType.Border:
+                    BaseDisplayString = $"<color={TextAtlas.Border}>{TextAtlas.borderChar}</color>";
+                    break;
+                default:
+                    BaseDisplayString = TextAtlas.forest.ToString();
+                    break;
+            }
+        }
+        else
+        {
+            switch (TileType)
+            {
+                case WorldTileType.Water:
+                    BaseDisplayString = $"<color={TextAtlas.water}>{TextAtlas.waterChar}</color>";
+                    break;
+                case WorldTileType.Desert:
+                    BaseDisplayString = $"<color={TextAtlas.desert}>{TextAtlas.desertChar}</color>";
+                    break;
+                case WorldTileType.Forest:
+                    BaseDisplayString = $"<color={TextAtlas.forest}>{TextAtlas.forestChar}</color>";
+                    break;
+                case WorldTileType.Mountain:
+                    BaseDisplayString = $"<color={TextAtlas.mountain}>{TextAtlas.mountainChar}</color>";
+                    break;
+                case WorldTileType.Snow:
+                    BaseDisplayString = $"<color={TextAtlas.snow}>{TextAtlas.snowChar}</color>";
+                    break;
+                default:
+                    BaseDisplayString = $"<color={TextAtlas.forest}>{TextAtlas.forestChar}</color>";
+                    break;
+            }
+        }
+    }
+
     bool SetTransversable(WorldTileType type)
     {
         if (type == WorldTileType.Water || type == WorldTileType.Mountain)
@@ -134,7 +194,7 @@ public class WorldTile
 /// <summary>
 /// Represents a position in the world.
 /// </summary>
-public sealed class WorldTilePos : IEquatable<WorldTilePos>
+public struct WorldTilePos : IEquatable<WorldTilePos>
 {
     public readonly int x;
     public readonly int y;
@@ -152,7 +212,7 @@ public sealed class WorldTilePos : IEquatable<WorldTilePos>
 
     public bool Equals(WorldTilePos other)
     {
-        return other != null && this.x == other.x && this.y == other.y;
+        return this.x == other.x && this.y == other.y;
     }
 
     public override int GetHashCode()
@@ -168,10 +228,6 @@ public sealed class WorldTilePos : IEquatable<WorldTilePos>
 
     public static bool operator ==(WorldTilePos left, WorldTilePos right)
     {
-        if (ReferenceEquals(left, right))
-            return true;
-        if (left is null || right is null)
-            return false;
         return left.Equals(right);
     }
 
