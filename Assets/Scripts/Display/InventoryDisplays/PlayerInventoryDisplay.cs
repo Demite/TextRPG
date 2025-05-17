@@ -22,10 +22,10 @@ public class PlayerInventoryDisplay : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.Z))
         {
-            WeaponBase sword = new WeaponBase(name: "Sword", min: 5, max: 10, description: "A sword", descriptionLog: "A sword", weight: 2, value: 10, itemType: ItemType.Weapon, weaponType: WeaponStyle.OneHanded, weaponClass: WeaponClass.Sword);
+          /*  WeaponBase sword = new WeaponBase(name: "Sword", min: 5, max: 10, description: "A sword", descriptionLog: "A sword", weight: 2, value: 10, itemType: ItemType.Weapon, weaponType: WeaponStyle.OneHanded, weaponClass: WeaponClass.Sword);
             WeaponBase axe = new WeaponBase(name: "Axe", min: 7, max: 12, description: "An axe", descriptionLog: "An axe", weight: 3, value: 15, itemType: ItemType.Weapon, weaponType: WeaponStyle.OneHanded, weaponClass: WeaponClass.Axe);
             Inventory.AddItem(axe, 1);
-            Inventory.AddItem(sword, 1);
+            Inventory.AddItem(sword, 1);*/
         }
     }
 }

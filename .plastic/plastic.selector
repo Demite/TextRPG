@@ -1,4 +1,0 @@
-repository "TextRPG@cda1987@cloud"
-  path "/"
-    br "/main"
-    co "/main"

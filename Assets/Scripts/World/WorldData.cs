@@ -90,6 +90,8 @@ public class WorldData : MonoBehaviour
             tile.IsTileTransversable = true;
         }
     }
+    #endregion
+    #region Player Spawn Methods
     public bool FindSuitableTileForPlayerToSpawn()
     {
         List<LevelTile> tiles = new List<LevelTile>();
@@ -113,10 +115,32 @@ public class WorldData : MonoBehaviour
         Debug.LogError("No suitable tile found for player to spawn.");
         return false;
     }
-
-    #endregion
+    public bool FindSuitableTileForPlayerSpawnInTown()
+    {
+        List<LevelTile> tiles = new List<LevelTile>();
+        foreach (var tile in ActiveLevelData.Values)
+        {
+            if (tile.IsTransversable && !tile.IsOccupiedByEnitiy && !tile.IsOccupiedByFoliage && !tile.IsOccupiedByBuilding)
+            {
+                tiles.Add(tile);
+            }
+        }
+        if (tiles.Count > 0)
+        {
+            int index = UnityEngine.Random.Range(0, tiles.Count);
+            LevelTile chosenTile = tiles[index];
+            // Compute the spawn location from the tile's coordinates
+            LevelPOS spawnLocation = new LevelPOS(chosenTile.TileX, chosenTile.TileY, chosenTile.TileZ);
+            Game_Manager.Instance.PlayerLevelSpawnLocation = spawnLocation;
+            Debug.Log("Player spawn location found at " + spawnLocation);
+            return true;
+        }
+        Debug.LogError("No suitable tile found for player to spawn.");
+        return false;
+    }
+        #endregion
     #region Foliage Methods
-    public void SetFoliageOnLevelTile(IFoliage foliage, LevelPOS pos)
+        public void SetFoliageOnLevelTile(IFoliage foliage, LevelPOS pos)
     {
         if (ActiveLevelData.TryGetValue(pos, out LevelTile tile))
         {

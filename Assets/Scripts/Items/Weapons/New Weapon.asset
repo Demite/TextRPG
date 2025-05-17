@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b76e806b92bd09e499ba1de6974b07db, type: 3}
+  m_Name: New Weapon
+  m_EditorClassIdentifier: 
+  itemName: 
+  icon: {fileID: 0}
+  attributes:
+    Strength: 0
+    Dexterity: 0
+    Constitution: 0
+    Intelligence: 0
+    Wisdom: 0
+    Willpower: 0
+    Charisma: 0
+    HitPoints: 0
+    StaminaPoints: 0
+    ManaPoints: 0
+    AdditionalDamageOnHit: 0
+    AdditionalDamage: 0
+  id: 0
+  MaxStack: 10
+  CurrentStack: 1
+  weaponType: 0
+  weaponClass: 0
+  weaponSlot: 8
+  minDamage: 0
+  maxDamage: 0
+  range: 0

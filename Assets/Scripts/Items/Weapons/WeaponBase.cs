@@ -1,10 +1,12 @@
 using UnityEngine;
+
 public enum WeaponStyle
 {
     OneHanded,
     TwoHanded,
     Ranged
 }
+
 public enum WeaponClass
 {
     Sword,
@@ -16,18 +18,31 @@ public enum WeaponClass
     Unarmed,
     Wand
 }
+
+[CreateAssetMenu(fileName = "New Weapon", menuName = "Items/Weapons/Weapon")]
 public class WeaponBase : ItemBase
 {
-    public WeaponStyle weaponType { get; set; }
-    public WeaponClass weaponClass { get; set; }
-    public int minDamage { get; set; }
-    public int maxDamage { get; set; }
-    private int range { get; set; }
-    public WeaponBase(string name, int min, int max, string description, string descriptionLog, float weight, float value, ItemType itemType, WeaponStyle weaponType, WeaponClass weaponClass) : base(name, description, descriptionLog, weight, value, itemType)
+    [Header("Weapon Specific Data")]
+    public WeaponStyle weaponType;
+    public WeaponClass weaponClass;
+    public ItemSlot weaponSlot;
+
+    [SerializeField] private int minDamage;
+    [SerializeField] private int maxDamage;
+    [SerializeField] private int range;
+
+    public int MinDamage => minDamage;
+    public int MaxDamage => maxDamage;
+    public int Range => range;
+
+    private void Reset()
     {
-        this.weaponType = weaponType;
-        this.weaponClass = weaponClass;
-        minDamage = min;
-        maxDamage = max;
+        itemType = ItemType.Weapon;
+        weaponType = WeaponStyle.OneHanded;
+        weaponClass = WeaponClass.Sword;
+        weaponSlot = ItemSlot.Weapon1;
+        minDamage = 1;
+        maxDamage = 10;
+        range = 1;
     }
 }

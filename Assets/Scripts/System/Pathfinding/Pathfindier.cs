@@ -132,6 +132,10 @@ public class Pathfindier
     {
         return Mathf.Abs(start.x - goal.x) + Mathf.Abs(start.y - goal.y);
     }
+    public static int GetDistanceBetweenLevelPositions(WorldTilePos a, WorldTilePos b)
+    {
+        return Mathf.Abs(a.x - b.x) + Mathf.Abs(a.y - b.y);
+    }
 
     // Manhattan distance heuristic for grid-based movement.
     private static int ManhattanDistance(WorldTilePos a, WorldTilePos b)

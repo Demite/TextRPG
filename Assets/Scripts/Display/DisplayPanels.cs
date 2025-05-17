@@ -7,6 +7,7 @@ public class DisplayPanels : MonoBehaviour
 {
     [Header("Game Display")]
     public GameObject GameDisplay;
+    public GameObject GameView;
 
     //TileDisplay
     [Header("Tile Display")]
@@ -97,8 +98,9 @@ public class DisplayPanels : MonoBehaviour
     }
     private void Update()
     {
-        // Tab button Interacts with HostilePeaceButton
-        if (Input.GetKeyDown(KeyCode.Tab))
+        // If either shift key is held and Tab is pressed this frame
+        if ((Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
+            && Input.GetKeyDown(KeyCode.Tab))
         {
             HostilePeaceButton.onClick.Invoke();
         }

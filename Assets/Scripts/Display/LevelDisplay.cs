@@ -59,6 +59,27 @@ public class LevelDisplay : Display
                             {
                                 displayChar = $"<color={tile.attribute.SymbolColor}>{tile.attribute.Symbol}</color>";
                             }
+                            else if (tile.IsOccupiedByBuilding)
+                            {
+                                switch (tile.BuildingPart)
+                                {
+                                    case BuildingPart.Wall:
+                                        displayChar = $"<color={tile.Building.WallColor}>{tile.Building.BuildWallSymbol}</color>";
+                                        break;
+                                    case BuildingPart.Door:
+                                        displayChar = $"<color={tile.Building.DoorColorClosedColor}>{tile.Building.BuildDoorSymbol}</color>";
+                                        break;
+                                    case BuildingPart.Floor:
+                                        displayChar = $"<color={tile.Building.BuildingFloorColor}>{tile.Building.BuildFloorSymbol}</color>";
+                                        break;
+                                    case BuildingPart.Stairs:
+                                        displayChar = $"<color={tile.Building.StairsColor}>{tile.Building.BuildingStairsSymbol}</color>";
+                                        break;
+                                    default:
+                                        displayChar = $"<color={tile.Building.BuildingFloorColor}>{tile.Building.BuildFloorSymbol}</color>";
+                                        break;
+                                }
+                            }
                             else
                             {
                                 displayChar = GetTileDisplay(tile);

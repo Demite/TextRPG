@@ -290,7 +290,7 @@ public class WorldGen : MonoBehaviour
                     if (townTile != null && worldData.WorldTileData.TryGetValue(townTile, out WorldTile ctile))
                     {
                         ctile.SetTownOnTile(TownCapital);
-                        ctile.IsTileTransversable = false;
+                        ctile.IsTileTransversable = true;
                         ctile.IsPOI = true;
                         ctile.POI = WorldTile.POIType.Town;
                         TownCapital.TownLocation = townTile;

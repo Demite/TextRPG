@@ -5,7 +5,7 @@ using Unity.VisualScripting;
 
 public class NewCharacterDisplay : MonoBehaviour
 {
-    public GameObject GamePanel;
+    //public GameObject GamePanel;
 
     [Header("Character Name Field")]
     public TMP_InputField characterName;

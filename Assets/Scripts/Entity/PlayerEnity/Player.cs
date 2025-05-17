@@ -136,7 +136,11 @@ public class Player : PlayerBase
             if (worldData.WorldTileData.TryGetValue(entityWorldPos, out WorldTile MyTile))
             {
                 LevelGen generator = new LevelGen();
-                generator.GenerateForestLevel(MyTile);
+                if (MyTile.TileType == WorldTile.WorldTileType.Forest)
+                {
+                    Game_Manager.Instance.PlayerLoadingIntoBiome = true;
+                    generator.GenerateForestLevel(MyTile);
+                }
             }
         }
 

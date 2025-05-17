@@ -3,7 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class InteractionClicker : MonoBehaviour, IPointerClickHandler
+public class LevelInteractionClicker : MonoBehaviour, IPointerClickHandler
 {
     public TMPro.TMP_Text LevelViewText;
     public int ClickedDistance = 1;
@@ -96,3 +96,6 @@ public class InteractionClicker : MonoBehaviour, IPointerClickHandler
         }
     }
 }
+        
+    
+

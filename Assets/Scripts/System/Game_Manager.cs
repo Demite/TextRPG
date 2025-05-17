@@ -29,6 +29,10 @@ public class Game_Manager : MonoBehaviour
     private bool GameSetup = false;
     public bool IsWorldViewActive = true;
 
+
+    public bool PlayerLoadingIntoTown = false;
+    public bool PlayerLoadingIntoBiome = false;
+
     [Header("Managers")]
     public Turn_Manager turnManager; // Ensure this is assigned in Inspector or via code
 
@@ -108,7 +112,10 @@ public class Game_Manager : MonoBehaviour
     private void StartGame()
     {
         displayPanels.LoadingScreen.SetActive(false);
+
+        // Activate all necessary game panels.
         displayPanels.GameDisplay.SetActive(true);
+        displayPanels.GameView.SetActive(true);
         worldDisplay.BuildWorldDisplay();
     }
     private IEnumerator ScreenTimerCoroutine()
@@ -166,23 +173,54 @@ public class Game_Manager : MonoBehaviour
 
     public void LoadLevel()
     {
-        if (worldData.FindSuitableTileForPlayerToSpawn())
+        Debug.Log("Getting Player Spawn Location...");
+        if (PlayerLoadingIntoBiome)
         {
-            player.IsInWorld = false;
-            player.entityLevelPos = PlayerLevelSpawnLocation;
-            Debug.Log($"Player spawned at {PlayerLevelSpawnLocation.x}, {PlayerLevelSpawnLocation.y}.");
-            player.IsInLevel = true;
-            worldData.SetEntityOnLevelTile(player, PlayerLevelSpawnLocation);
+            if (worldData.FindSuitableTileForPlayerToSpawn())
+            {
+                player.IsInWorld = false;
+                player.entityLevelPos = PlayerLevelSpawnLocation;
+                Debug.Log($"Player spawned at {PlayerLevelSpawnLocation.x}, {PlayerLevelSpawnLocation.y}.");
+                player.IsInLevel = true;
+                worldData.SetEntityOnLevelTile(player, PlayerLevelSpawnLocation);
 
-            // **Ensure level size is set before building/centering display!**
+                // **Ensure level size is set before building/centering display!**
 
-            levelDisplay.BuildWorldDisplay();
-            Debug.Log($"Player Location {player.entityLevelPos.x}, {player.entityLevelPos.y}, Spawned location {PlayerLevelSpawnLocation.x}, {PlayerLevelSpawnLocation.y}");
-            player.CenterDisplayOnPlayerInLevelView();
+                levelDisplay.BuildWorldDisplay();
+                Debug.Log($"Player Location {player.entityLevelPos.x}, {player.entityLevelPos.y}, Spawned location {PlayerLevelSpawnLocation.x}, {PlayerLevelSpawnLocation.y}");
+                player.CenterDisplayOnPlayerInLevelView();
+                PlayerLoadingIntoBiome = false;
+            }
+            else
+            {
+                Debug.LogError("No suitable tile found for player to spawn.");
+            }
         }
-        else
+        if( PlayerLoadingIntoTown)
         {
-            Debug.LogError("No suitable tile found for player to spawn.");
+            Debug.Log("Loading Player into Town.");
+            if (worldData.FindSuitableTileForPlayerSpawnInTown())
+            {
+                Debug.Log("Player Spawn Location Found.");
+                player.IsInWorld = false;
+                player.entityLevelPos = PlayerLevelSpawnLocation;
+                Debug.Log($"Player spawned at {PlayerLevelSpawnLocation.x}, {PlayerLevelSpawnLocation.y}.");
+                player.IsInLevel = true;
+                worldData.SetEntityOnLevelTile(player, PlayerLevelSpawnLocation);
+
+                // **Ensure level size is set before building/centering display!**
+
+                levelDisplay.BuildWorldDisplay();
+                Debug.Log($"Player Location {player.entityLevelPos.x}, {player.entityLevelPos.y}, Spawned location {PlayerLevelSpawnLocation.x}, {PlayerLevelSpawnLocation.y}");
+                player.CenterDisplayOnPlayerInLevelView();
+                PlayerLoadingIntoTown = false;
+            }
+            else
+            {
+                Debug.LogError("No suitable tile found for player to spawn.");
+            }
+
+
         }
     }
 

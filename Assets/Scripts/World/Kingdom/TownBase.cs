@@ -9,12 +9,34 @@ public class TownBase
     public bool IsCapital;
     private List<string> TownNames = new List<string>();
     public List<KingdomTile> KingdomTilesUnderTown = new List<KingdomTile>();
+    public List<Building> BuildingsInTown = new List<Building>();
+    public List<EntityNPCBase> NpcsInTown = new List<EntityNPCBase>();
+    public List<Building> HomesInTown = new List<Building>();
+    public List<Building> ShopsInTown = new List<Building>();
+    public Building Temple;
+    public Building GuildHall;
+    public Building Tavern;
 
+    public bool HasGuildHall;
+    public bool HasTemple;
+    public bool HasTavern;
+    public int AmountOfBuildings;
+    public int NumberOfHomes;
+    public int NumberOfShops;
 
-    public TownBase(KingdomBase Kingdom, string name)
+    public TownBase(KingdomBase kingdom, string name)
+    {
+        myKingdom = kingdom;
+        TownName = name;
+    }
+    public TownBase(KingdomBase Kingdom, string name, /*int amountofbuildings,*/ bool GuildHall, bool Temple, bool Tavern)
     {
         Kingdom = myKingdom;
         TownName = name;
+        AmountOfBuildings = 3;//amountofbuildings;
+        HasGuildHall = GuildHall;
+        HasTemple = Temple;
+        HasTavern = Tavern;
     }
     public TownBase(KingdomBase kingdom)
     {

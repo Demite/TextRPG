@@ -18,6 +18,8 @@ public class LevelTile
     public IEntity entity;
     public IFoliage foliage;
     public ITileAttribute attribute;
+    public BuildingPart BuildingPart;
+    public Building Building;
 
     public LevelTileBiome Biome { get; set; }
     public ForestTiles ForestTileType { get; set; }
@@ -30,6 +32,7 @@ public class LevelTile
     public bool IsTransversable = true;
     public bool IsPlayersSpawnTile = false;
     public bool IsOccupiedByAttribute = false; // Not All Attributes are bad. Some are good.
+    public bool IsOccupiedByBuilding = false;
 
     /// <summary>
     /// 

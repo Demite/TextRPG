@@ -23,6 +23,16 @@ public class LevelGen : MonoBehaviour
         Game_Manager.Instance.levelDisplay.SetLevelSize(LevelX, LevelY);
         forestGen.GenerateLevel();
     }
+    public void GenerateHumanTownLevel(WorldTile tile)
+    {
+        // Create an instance of your HumanTownGen to generate a town level.
+        HumanTownGen humantown = new HumanTownGen(tile, tile.TownOnTile);
+        humantown.TileSizeX = LevelX;
+        humantown.TileSizeY = LevelY;
+        humantown.TileSizeZ = LevelZ;
+        Game_Manager.Instance.levelDisplay.SetLevelSize(LevelX, LevelY);
+        humantown.GenerateLevel();
+    }
 
     void Start()
     {
