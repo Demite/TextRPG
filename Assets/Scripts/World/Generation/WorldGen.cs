@@ -178,6 +178,8 @@ public class WorldGen : MonoBehaviour
             Game_Manager.Instance.displayPanels.UpdateLoadingText($"Region {i + 1}/{regions} and Kingdom {kingdom.KingdomName} complete.");
             kingdom.GenerateMyKingdomsRoads(100f);
         }
+
+        MarkBordersForAllRegions();
     }
 
     /// <summary>
@@ -556,6 +558,39 @@ public class WorldGen : MonoBehaviour
                 Rabbit rabbit = new Rabbit();
                 rabbit.SpawnRabbitNearPlayer(1);
                 currentSpawn++;
+            }
+        }
+    }
+
+    /// <summary>
+    /// Mark border tiles for all regions after generation.
+    /// Tiles that touch a tile from another region (or no region) become borders.
+    /// </summary>
+    private void MarkBordersForAllRegions()
+    {
+        Vector2Int[] directions = new Vector2Int[]
+        {
+            new Vector2Int(1,0), new Vector2Int(-1,0),
+            new Vector2Int(0,1), new Vector2Int(0,-1)
+        };
+
+        foreach (var region in Game_Manager.Instance.WorldRegions)
+        {
+            foreach (var tile in region.RegionTiles)
+            {
+                foreach (var dir in directions)
+                {
+                    WorldTilePos neighborPos = new WorldTilePos(tile.TileX + dir.x, tile.TileY + dir.y);
+                    if (worldData.WorldTileData.TryGetValue(neighborPos, out WorldTile neighbor))
+                    {
+                        if (neighbor.Region != tile.Region && tile.POI == WorldTile.POIType.None && !tile.IsRoad && !tile.IsTown)
+                        {
+                            tile.IsBorder = true;
+                            tile.POI = WorldTile.POIType.Border;
+                            break;
+                        }
+                    }
+                }
             }
         }
     }

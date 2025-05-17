@@ -15,6 +15,7 @@
     public static readonly string AbandonMine = "#696969"; // DimGray
     public static readonly string Road = "#2F4F4F";        // DarkSlateGray
     public static readonly string Farm = "#8B4513";        // SaddleBrown
+    public static readonly string Border = "#FF00FF";      // Magenta for borders
 
     public static readonly string mountain = "#A9A9A9";    // Gray
     public static readonly string forest = "#228B22";      // Green
@@ -40,4 +41,5 @@
     public static readonly char abandonedMineChar = '⌂';
     public static readonly char roadChar = '=';
     public static readonly char farmChar = '◊';
+    public static readonly char borderChar = '#';
 }

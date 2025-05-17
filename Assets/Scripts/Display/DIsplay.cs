@@ -111,6 +111,8 @@ public class Display : MonoBehaviour
                     return $"<color={TextAtlas.Town}>{TextAtlas.townChar}</color>";
                 case WorldTile.POIType.Road:
                     return $"<color={TextAtlas.Road}>{TextAtlas.roadChar}</color>";
+                case WorldTile.POIType.Border:
+                    return $"<color={TextAtlas.Border}>{TextAtlas.borderChar}</color>";
                 default:
                     return TextAtlas.forest.ToString();
             }

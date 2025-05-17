@@ -30,7 +30,8 @@ public class WorldTile
         Road,
         Mine,
         AbandonedMine,
-        Farm
+        Farm,
+        Border
     }
 
     public int TileX { get; set; }
@@ -45,6 +46,7 @@ public class WorldTile
     public bool IsPOI { get; set; } = false;
     public bool IsRoad { get; set; } = false;
     public bool IsTown { get; set; } = false;
+    public bool IsBorder { get; set; } = false;
     public WorldRegions Region { get; set; }
     public TownBase TownOnTile { get; set; }
     public IEntity EntityOnTile { get; set; }
