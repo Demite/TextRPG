@@ -1,6 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
-public enum ItemType
+public enum ItemType // test
 {
     Weapon,
     Armor,
