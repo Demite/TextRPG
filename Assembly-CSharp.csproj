@@ -100,7 +100,6 @@
     <Compile Include="Assets\Scripts\Display\DisplayPanels.cs" />
     <Compile Include="Assets\Scripts\System\Targetting\TabTargetting.cs" />
     <Compile Include="Assets\Scripts\System\Targetting\LevelInteractionClicker.cs" />
-    <Compile Include="Assets\Scripts\Entity\EntityBase.cs" />
     <Compile Include="Assets\Scripts\World\Generation\WorldGen.cs" />
     <Compile Include="Assets\Scripts\Display\WorldTileHoverInfo.cs" />
     <Compile Include="Assets\Scripts\Entity\EntityData\EntityForestData.cs" />
@@ -113,6 +112,7 @@
     <Compile Include="Assets\Scripts\Entity\EnityNPCBase.cs" />
     <Compile Include="Assets\Scripts\Display\ChatBox\ChatLog.cs" />
     <Compile Include="Assets\Scripts\World\Generation\WorldRegions.cs" />
+    <Compile Include="Assets\Scripts\Entity\PlayerBase.cs" />
     <Compile Include="Assets\Scripts\Entity\PlayerEnity\Player.cs" />
     <Compile Include="Assets\Scripts\Entity\PlayerEnity\PlayerController.cs" />
     <Compile Include="Assets\Scripts\World\Kingdom\KingdomTile.cs" />
