@@ -72,11 +72,11 @@ public class CliffEdge : ITileAttribute
     /// <summary>
     /// The Z index of the Z layer the CliffEdge is on.
     /// </summary>
-    public LevelPOS ZindexLower { get; set; }
+    public LevelPOS? ZindexLower { get; set; }
     /// <summary>
     /// The Z Index of the Z layer the Cliffedge is reaching up to.
     /// </summary>
-    public LevelPOS ZindexUpper { get; set; }
+    public LevelPOS? ZindexUpper { get; set; }
 
     /// <summary>
     /// This constructor is used for cliff edges that are on a level with a Z index.
@@ -88,6 +88,10 @@ public class CliffEdge : ITileAttribute
     {
         Material = material;
         GetCliffEdgeInformation();
+        IsSolid = true;
+        IsClimbable = false;
+        ZindexLower = lower;
+        ZindexUpper = upper;
     }
     /// <summary>
     /// This Constructor is used to Cliff edges on a level without a Z index.

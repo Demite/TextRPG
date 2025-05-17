@@ -18,11 +18,11 @@ public class Pathfindier
         public int hCost;  // Heuristic cost to the goal.
         public int fCost { get { return gCost + hCost; } }
         // For path reconstruction, 'parent' is used.
-        // (This code assumes that WorldTilePos is a reference type or a nullable struct.)
-        public WorldTilePos parent;
+        // Parent is nullable because WorldTilePos is a struct.
+        public WorldTilePos? parent;
         public Vector2Int direction; // The movement direction from the parent.
 
-        public Node(WorldTilePos pos, int g, int h, WorldTilePos parent, Vector2Int direction)
+        public Node(WorldTilePos pos, int g, int h, WorldTilePos? parent, Vector2Int direction)
         {
             this.position = pos;
             this.gCost = g;
@@ -149,9 +149,9 @@ public class Pathfindier
         List<WorldTilePos> path = new List<WorldTilePos>();
         path.Add(current);
         // Here we assume that a null parent indicates the start node.
-        while (cameFrom[current].parent != null)
+        while (cameFrom[current].parent.HasValue)
         {
-            current = cameFrom[current].parent;
+            current = cameFrom[current].parent.Value;
             path.Add(current);
         }
         path.Reverse();
