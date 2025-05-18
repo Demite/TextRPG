@@ -113,6 +113,7 @@
     <Compile Include="Assets\Scripts\Display\ChatBox\ChatLog.cs" />
     <Compile Include="Assets\Scripts\World\Generation\WorldRegions.cs" />
     <Compile Include="Assets\Scripts\Entity\PlayerBase.cs" />
+    <Compile Include="Assets\Scripts\World\Generation\LevelTypeGens\Biomes\JungleTileGen.cs" />
     <Compile Include="Assets\Scripts\Entity\PlayerEnity\Player.cs" />
     <Compile Include="Assets\Scripts\Entity\PlayerEnity\PlayerController.cs" />
     <Compile Include="Assets\Scripts\World\Kingdom\KingdomTile.cs" />
@@ -121,6 +122,7 @@
     <Compile Include="Assets\Scripts\World\Generation\TileGenerator\LevelTileGenBase.cs" />
     <Compile Include="Assets\Scripts\Display\ChatBox\ChatLogInteract.cs" />
     <Compile Include="Assets\Scripts\Items\ItemAttributes.cs" />
+    <Compile Include="Assets\Scripts\World\Generation\LevelTypeGens\Biomes\SwampTileGen.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
