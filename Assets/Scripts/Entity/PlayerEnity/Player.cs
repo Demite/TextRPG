@@ -28,6 +28,29 @@ public class Player : PlayerBase
 
     void Update()
     {
+        // Allow immediate biome loading regardless of turn state
+        if (Input.GetKey(KeyCode.LeftShift) && Input.GetKeyDown(KeyCode.G))
+        {
+            if (worldData.WorldTileData.TryGetValue(entityWorldPos, out WorldTile currentTile))
+            {
+                LevelGen generator = new LevelGen();
+                Game_Manager.Instance.PlayerLoadingIntoBiome = true;
+
+                switch (currentTile.TileType)
+                {
+                    case WorldTile.WorldTileType.Forest:
+                        generator.GenerateForestLevel(currentTile);
+                        break;
+                    case WorldTile.WorldTileType.Swamp:
+                        generator.GenerateSwampLevel(currentTile);
+                        break;
+                    case WorldTile.WorldTileType.Jungle:
+                        generator.GenerateJungleLevel(currentTile);
+                        break;
+                }
+            }
+        }
+
         if (Game_Manager.Instance.CurrentTurnState == TurnState.PlayerTurn &&
             !turnProcessed && gameManager.CharacterSetup)
         {
@@ -130,27 +153,6 @@ public class Player : PlayerBase
                 Debug.Log("D key pressed");
         }
 
-        // Process forest level generation: require LeftShift held while pressing G.
-        if (Input.GetKey(KeyCode.LeftShift) && Input.GetKeyDown(KeyCode.G))
-        {
-            if (worldData.WorldTileData.TryGetValue(entityWorldPos, out WorldTile MyTile))
-            {
-                LevelGen generator = new LevelGen();
-                Game_Manager.Instance.PlayerLoadingIntoBiome = true;
-                switch (MyTile.TileType)
-                {
-                    case WorldTile.WorldTileType.Forest:
-                        generator.GenerateForestLevel(MyTile);
-                        break;
-                    case WorldTile.WorldTileType.Swamp:
-                        generator.GenerateSwampLevel(MyTile);
-                        break;
-                    case WorldTile.WorldTileType.Jungle:
-                        generator.GenerateJungleLevel(MyTile);
-                        break;
-                }
-            }
-        }
 
         // Teleport to Region 0 center tile.
         if (Input.GetKeyDown(KeyCode.I))
