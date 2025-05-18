@@ -93,21 +93,26 @@ public class Farm : KingdomTile
 
     void setFertility(WorldTile tile)
     {
-        if(tile.TileType == WorldTile.WorldTileType.Desert)
+        switch (tile.TileType)
         {
-            Ferit = Feritility.Low;
-        }
-        if(tile.TileType == WorldTile.WorldTileType.Snow)
-        {
-            Ferit = Feritility.VeryLow;
-        }
-        if(tile.TileType == WorldTile.WorldTileType.Forest)
-        {
-            Ferit = Feritility.High;
-        }
-        if (tile.TileType == WorldTile.WorldTileType.Mountain)
-        {
-            Ferit = Feritility.Low;
+            case WorldTile.WorldTileType.Desert:
+            case WorldTile.WorldTileType.Mountain:
+                Ferit = Feritility.Low;
+                break;
+            case WorldTile.WorldTileType.Snow:
+                Ferit = Feritility.VeryLow;
+                break;
+            case WorldTile.WorldTileType.Forest:
+            case WorldTile.WorldTileType.Plains:
+            case WorldTile.WorldTileType.Jungle:
+                Ferit = Feritility.High;
+                break;
+            case WorldTile.WorldTileType.Swamp:
+                Ferit = Feritility.Medium;
+                break;
+            default:
+                Ferit = Feritility.Medium;
+                break;
         }
     }
 }
