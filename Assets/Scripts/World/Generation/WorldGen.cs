@@ -19,10 +19,16 @@ public class WorldGen : MonoBehaviour
     public float waterThreshold = 0.7f;
     [Tooltip("Tiles with noise values below this become desert.")]
     public float desertThreshold = 0.76f;
+    [Tooltip("Tiles with noise values below this become plains.")]
+    public float plainsThreshold = 0.82f;
     [Tooltip("Tiles with noise values below this become forest.")]
     public float forestThreshold = 0.88f;
+    [Tooltip("Tiles with noise values below this become swamp.")]
+    public float swampThreshold = 0.92f;
+    [Tooltip("Tiles with noise values below this become jungle.")]
+    public float jungleThreshold = 0.96f;
     [Tooltip("Tiles with noise values below this become mountain.")]
-    public float mountainThreshold = 0.95f;
+    public float mountainThreshold = 0.98f;
     // Tiles with noise values above mountainThreshold become snow.
 
     private System.Random random = new System.Random();
@@ -74,9 +80,21 @@ public class WorldGen : MonoBehaviour
                 {
                     tileType = WorldTile.WorldTileType.Desert;
                 }
+                else if (noiseValue < plainsThreshold)
+                {
+                    tileType = WorldTile.WorldTileType.Plains;
+                }
                 else if (noiseValue < forestThreshold)
                 {
                     tileType = WorldTile.WorldTileType.Forest;
+                }
+                else if (noiseValue < swampThreshold)
+                {
+                    tileType = WorldTile.WorldTileType.Swamp;
+                }
+                else if (noiseValue < jungleThreshold)
+                {
+                    tileType = WorldTile.WorldTileType.Jungle;
                 }
                 else if (noiseValue < mountainThreshold)
                 {

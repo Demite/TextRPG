@@ -21,7 +21,10 @@ public class WorldTile
         Mountain,
         Forest,
         Desert,
-        Snow
+        Snow,
+        Plains,
+        Swamp,
+        Jungle
     }
     public enum POIType
     { 
@@ -160,8 +163,17 @@ public class WorldTile
                 case WorldTileType.Desert:
                     BaseDisplayString = $"<color={TextAtlas.desert}>{TextAtlas.desertChar}</color>";
                     break;
+                case WorldTileType.Plains:
+                    BaseDisplayString = $"<color={TextAtlas.plains}>{TextAtlas.plainsChar}</color>";
+                    break;
                 case WorldTileType.Forest:
                     BaseDisplayString = $"<color={TextAtlas.forest}>{TextAtlas.forestChar}</color>";
+                    break;
+                case WorldTileType.Swamp:
+                    BaseDisplayString = $"<color={TextAtlas.swamp}>{TextAtlas.swampChar}</color>";
+                    break;
+                case WorldTileType.Jungle:
+                    BaseDisplayString = $"<color={TextAtlas.jungle}>{TextAtlas.jungleChar}</color>";
                     break;
                 case WorldTileType.Mountain:
                     BaseDisplayString = $"<color={TextAtlas.mountain}>{TextAtlas.mountainChar}</color>";
@@ -215,8 +227,17 @@ public class WorldTile
                 case WorldTileType.Desert:
                     BaseDisplayString = $"<color={TextAtlas.desert}>{TextAtlas.desertChar}</color>";
                     break;
+                case WorldTileType.Plains:
+                    BaseDisplayString = $"<color={TextAtlas.plains}>{TextAtlas.plainsChar}</color>";
+                    break;
                 case WorldTileType.Forest:
                     BaseDisplayString = $"<color={TextAtlas.forest}>{TextAtlas.forestChar}</color>";
+                    break;
+                case WorldTileType.Swamp:
+                    BaseDisplayString = $"<color={TextAtlas.swamp}>{TextAtlas.swampChar}</color>";
+                    break;
+                case WorldTileType.Jungle:
+                    BaseDisplayString = $"<color={TextAtlas.jungle}>{TextAtlas.jungleChar}</color>";
                     break;
                 case WorldTileType.Mountain:
                     BaseDisplayString = $"<color={TextAtlas.mountain}>{TextAtlas.mountainChar}</color>";
@@ -233,7 +254,7 @@ public class WorldTile
 
     bool SetTransversable(WorldTileType type)
     {
-        if (type == WorldTileType.Water || type == WorldTileType.Mountain)
+        if (type == WorldTileType.Water || type == WorldTileType.Mountain || type == WorldTileType.Swamp)
         {
             return false;
 
