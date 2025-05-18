@@ -136,10 +136,18 @@ public class Player : PlayerBase
             if (worldData.WorldTileData.TryGetValue(entityWorldPos, out WorldTile MyTile))
             {
                 LevelGen generator = new LevelGen();
-                if (MyTile.TileType == WorldTile.WorldTileType.Forest)
+                Game_Manager.Instance.PlayerLoadingIntoBiome = true;
+                switch (MyTile.TileType)
                 {
-                    Game_Manager.Instance.PlayerLoadingIntoBiome = true;
-                    generator.GenerateForestLevel(MyTile);
+                    case WorldTile.WorldTileType.Forest:
+                        generator.GenerateForestLevel(MyTile);
+                        break;
+                    case WorldTile.WorldTileType.Swamp:
+                        generator.GenerateSwampLevel(MyTile);
+                        break;
+                    case WorldTile.WorldTileType.Jungle:
+                        generator.GenerateJungleLevel(MyTile);
+                        break;
                 }
             }
         }
@@ -366,4 +374,5 @@ public class Player : PlayerBase
         levelDisplay.BuildWorldDisplay();
     }
 }
+
 

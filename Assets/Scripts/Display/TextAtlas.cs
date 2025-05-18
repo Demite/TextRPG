@@ -8,6 +8,20 @@
     public static readonly string ForestFloorLeaves = "#6B8E23";       // OliveDrab for leafy areas
     public static readonly string ForestFloorRockyGround = "#708090";  // SlateGray for rocky ground
 
+    // Swamp Floor Tiles Colors
+    public static readonly string SwampFloorWater = "#2E8B57";
+    public static readonly string SwampFloorMud = "#5B3A29";
+    public static readonly string SwampFloorGrass = "#556B2F";
+    public static readonly string SwampFloorMoss = "#6B8E23";
+    public static readonly string SwampFloorRockyGround = "#696969";
+
+    // Jungle Floor Tiles Colors
+    public static readonly string JungleFloorLush = "#228B22";
+    public static readonly string JungleFloorDirt = "#8B4513";
+    public static readonly string JungleFloorGrass = "#006400";
+    public static readonly string JungleFloorMud = "#734F25";
+    public static readonly string JungleFloorRockyGround = "#808080";
+
     // World Tiles Colors
     public static readonly string water = "#1E90FF";       // DodgerBlue
     public static readonly string Town = "#FFD700";        // Gold
@@ -33,6 +47,20 @@
     public static readonly string ForestFloorLeavesChar = ".";
     public static readonly string ForestFloorRockyGroundChar = ".";
 
+    // Swamp Floor Tiles Characters
+    public static readonly string SwampFloorWaterChar = "~";
+    public static readonly string SwampFloorMudChar = ".";
+    public static readonly string SwampFloorGrassChar = ".";
+    public static readonly string SwampFloorMossChar = ".";
+    public static readonly string SwampFloorRockyGroundChar = ".";
+
+    // Jungle Floor Tiles Characters
+    public static readonly string JungleFloorLushChar = ".";
+    public static readonly string JungleFloorDirtChar = ".";
+    public static readonly string JungleFloorGrassChar = ".";
+    public static readonly string JungleFloorMudChar = ".";
+    public static readonly string JungleFloorRockyGroundChar = ".";
+
     // World Tile Characters
     public static readonly char waterChar = '~';
     public static readonly char mountainChar = '^';
@@ -49,3 +77,4 @@
     public static readonly char farmChar = '◊';
     public static readonly char borderChar = '#';
 }
+
