@@ -29,7 +29,7 @@ public class Player : PlayerBase
     void Update()
     {
         // Allow immediate biome loading regardless of turn state
-        if (Input.GetKey(KeyCode.LeftShift) && Input.GetKeyDown(KeyCode.G))
+        if (Input.GetKeyDown(KeyCode.G))
         {
             if (worldData.WorldTileData.TryGetValue(entityWorldPos, out WorldTile currentTile))
             {
@@ -54,7 +54,9 @@ public class Player : PlayerBase
                         break;
                 }
             }
+            Debug.Log($"Player pressed G to load into a biome at {entityWorldPos.x},{entityWorldPos.y}.");
         }
+
 
         if (Game_Manager.Instance.CurrentTurnState == TurnState.PlayerTurn &&
             !turnProcessed && gameManager.CharacterSetup)
