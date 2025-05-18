@@ -23,6 +23,8 @@ public class LevelTile
 
     public LevelTileBiome Biome { get; set; }
     public ForestTiles ForestTileType { get; set; }
+    public SwampTiles SwampTileType { get; set; }
+    public JungleTiles JungleTileType { get; set; }
 
     public bool IsVisible = false;
     public bool IsExplored = false;
@@ -83,6 +85,54 @@ public class LevelTile
                     break;
                 default:
                     BaseDisplayString = $"<color={TextAtlas.ForestFloorLush}>{TextAtlas.ForestFloorLushChar}</color>";
+                    break;
+            }
+        }
+        else if (Biome == TileEnums.LevelTileBiome.Swamp)
+        {
+            switch (SwampTileType)
+            {
+                case TileEnums.SwampTiles.WaterFloor:
+                    BaseDisplayString = $"<color={TextAtlas.SwampFloorWater}>{TextAtlas.SwampFloorWaterChar}</color>";
+                    break;
+                case TileEnums.SwampTiles.MudFloor:
+                    BaseDisplayString = $"<color={TextAtlas.SwampFloorMud}>{TextAtlas.SwampFloorMudChar}</color>";
+                    break;
+                case TileEnums.SwampTiles.GrassFloor:
+                    BaseDisplayString = $"<color={TextAtlas.SwampFloorGrass}>{TextAtlas.SwampFloorGrassChar}</color>";
+                    break;
+                case TileEnums.SwampTiles.MossFloor:
+                    BaseDisplayString = $"<color={TextAtlas.SwampFloorMoss}>{TextAtlas.SwampFloorMossChar}</color>";
+                    break;
+                case TileEnums.SwampTiles.RockyGroundFloor:
+                    BaseDisplayString = $"<color={TextAtlas.SwampFloorRockyGround}>{TextAtlas.SwampFloorRockyGroundChar}</color>";
+                    break;
+                default:
+                    BaseDisplayString = $"<color={TextAtlas.SwampFloorGrass}>{TextAtlas.SwampFloorGrassChar}</color>";
+                    break;
+            }
+        }
+        else if (Biome == TileEnums.LevelTileBiome.Jungle)
+        {
+            switch (JungleTileType)
+            {
+                case TileEnums.JungleTiles.LushFloor:
+                    BaseDisplayString = $"<color={TextAtlas.JungleFloorLush}>{TextAtlas.JungleFloorLushChar}</color>";
+                    break;
+                case TileEnums.JungleTiles.DirtFloor:
+                    BaseDisplayString = $"<color={TextAtlas.JungleFloorDirt}>{TextAtlas.JungleFloorDirtChar}</color>";
+                    break;
+                case TileEnums.JungleTiles.GrassFloor:
+                    BaseDisplayString = $"<color={TextAtlas.JungleFloorGrass}>{TextAtlas.JungleFloorGrassChar}</color>";
+                    break;
+                case TileEnums.JungleTiles.MudFloor:
+                    BaseDisplayString = $"<color={TextAtlas.JungleFloorMud}>{TextAtlas.JungleFloorMudChar}</color>";
+                    break;
+                case TileEnums.JungleTiles.RockyGroundFloor:
+                    BaseDisplayString = $"<color={TextAtlas.JungleFloorRockyGround}>{TextAtlas.JungleFloorRockyGroundChar}</color>";
+                    break;
+                default:
+                    BaseDisplayString = $"<color={TextAtlas.JungleFloorLush}>{TextAtlas.JungleFloorLushChar}</color>";
                     break;
             }
         }

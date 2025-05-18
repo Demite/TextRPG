@@ -23,6 +23,26 @@ public class LevelGen : MonoBehaviour
         Game_Manager.Instance.levelDisplay.SetLevelSize(LevelX, LevelY);
         forestGen.GenerateLevel();
     }
+
+    public void GenerateSwampLevel(WorldTile tile)
+    {
+        SwampTileGen swampGen = new SwampTileGen(tile);
+        swampGen.TileSizeX = LevelX;
+        swampGen.TileSizeY = LevelY;
+        swampGen.TileSizeZ = LevelZ;
+        Game_Manager.Instance.levelDisplay.SetLevelSize(LevelX, LevelY);
+        swampGen.GenerateLevel();
+    }
+
+    public void GenerateJungleLevel(WorldTile tile)
+    {
+        JungleTileGen jungleGen = new JungleTileGen(tile);
+        jungleGen.TileSizeX = LevelX;
+        jungleGen.TileSizeY = LevelY;
+        jungleGen.TileSizeZ = LevelZ;
+        Game_Manager.Instance.levelDisplay.SetLevelSize(LevelX, LevelY);
+        jungleGen.GenerateLevel();
+    }
     public void GenerateHumanTownLevel(WorldTile tile)
     {
         // Create an instance of your HumanTownGen to generate a town level.
@@ -38,3 +58,4 @@ public class LevelGen : MonoBehaviour
     {
     }
 }
+

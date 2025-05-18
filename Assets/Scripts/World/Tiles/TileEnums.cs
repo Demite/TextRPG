@@ -27,4 +27,21 @@ public class TileEnums
         LeavesFloor,
         RockyGroundFloor
     }
+    public enum SwampTiles
+    {
+        WaterFloor,
+        MudFloor,
+        GrassFloor,
+        MossFloor,
+        RockyGroundFloor
+    }
+
+    public enum JungleTiles
+    {
+        LushFloor,
+        DirtFloor,
+        GrassFloor,
+        MudFloor,
+        RockyGroundFloor
+    }
 }
