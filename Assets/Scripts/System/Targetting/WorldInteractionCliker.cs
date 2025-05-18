@@ -64,7 +64,12 @@ public class WorldInteractionCliker : MonoBehaviour, IPointerClickHandler
                     // Look up the tile data directly.
                     if (worldData.WorldTileData.TryGetValue(posKey, out WorldTile tile))
                     {
-                        LevelGen generator = new LevelGen();
+                        LevelGen generator = Game_Manager.Instance.levelGen;
+                        if (generator == null)
+                        {
+                            Debug.LogError("LevelGen not assigned!");
+                            return;
+                        }
                         if (tile.IsTown)
                         {
                             Debug.Log($"Clicked Town at {posKey.x}, {posKey.y}.");
