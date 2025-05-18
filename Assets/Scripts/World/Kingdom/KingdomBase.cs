@@ -14,6 +14,9 @@ public class KingdomBase
     private List<string> ForestKingdomNames = new List<string>();
     private List<string> MountainKingdomNames = new List<string>();
     private List<string> SnowKingdomNames = new List<string>();
+    private List<string> PlainsKingdomNames = new List<string>();
+    private List<string> SwampKingdomNames = new List<string>();
+    private List<string> JungleKingdomNames = new List<string>();
     public List<KingdomTile> KingdomTiles = new List<KingdomTile>();
     // List that contains all towns under this kingdom.
     public List<TownBase> KingdomTowns = new List<TownBase>();
@@ -57,6 +60,24 @@ public class KingdomBase
         SnowKingdomNames.Add("Snow Republic");
         SnowKingdomNames.Add("Snow Dominion");
         SnowKingdomNames.Add("Snow Federation");
+
+        PlainsKingdomNames.Add("Plains Kingdom");
+        PlainsKingdomNames.Add("Plains Empire");
+        PlainsKingdomNames.Add("Plains Republic");
+        PlainsKingdomNames.Add("Plains Dominion");
+        PlainsKingdomNames.Add("Plains Federation");
+
+        SwampKingdomNames.Add("Swamp Kingdom");
+        SwampKingdomNames.Add("Swamp Empire");
+        SwampKingdomNames.Add("Swamp Republic");
+        SwampKingdomNames.Add("Swamp Dominion");
+        SwampKingdomNames.Add("Swamp Federation");
+
+        JungleKingdomNames.Add("Jungle Kingdom");
+        JungleKingdomNames.Add("Jungle Empire");
+        JungleKingdomNames.Add("Jungle Republic");
+        JungleKingdomNames.Add("Jungle Dominion");
+        JungleKingdomNames.Add("Jungle Federation");
     }
 
 
@@ -71,41 +92,70 @@ public class KingdomBase
         int forestTileCount = 0;
         int mountainTileCount = 0;
         int snowTileCount = 0;
+        int plainsTileCount = 0;
+        int swampTileCount = 0;
+        int jungleTileCount = 0;
         foreach (var tile in Game_Manager.Instance.worldData.WorldTileData)
         {
-            if (tile.Value.TileType == WorldTile.WorldTileType.Snow)
+            switch (tile.Value.TileType)
             {
-                snowTileCount++;
+                case WorldTile.WorldTileType.Snow:
+                    snowTileCount++;
+                    break;
+                case WorldTile.WorldTileType.Desert:
+                    desertTileCount++;
+                    break;
+                case WorldTile.WorldTileType.Forest:
+                    forestTileCount++;
+                    break;
+                case WorldTile.WorldTileType.Mountain:
+                    mountainTileCount++;
+                    break;
+                case WorldTile.WorldTileType.Plains:
+                    plainsTileCount++;
+                    break;
+                case WorldTile.WorldTileType.Swamp:
+                    swampTileCount++;
+                    break;
+                case WorldTile.WorldTileType.Jungle:
+                    jungleTileCount++;
+                    break;
             }
-            else if (tile.Value.TileType == WorldTile.WorldTileType.Desert)
-            {
-                desertTileCount++;
-            }
-            else if (tile.Value.TileType == WorldTile.WorldTileType.Forest)
-            {
-                forestTileCount++;
-            }
-            else if (tile.Value.TileType == WorldTile.WorldTileType.Mountain)
-            {
-                mountainTileCount++;
-            }
         }
-        if( desertTileCount > forestTileCount && desertTileCount > mountainTileCount && desertTileCount > snowTileCount)
+        int max = desertTileCount;
+        List<string> selected = DesertKingdomNames;
+
+        if (forestTileCount > max)
         {
-            return DesertKingdomNames;
+            max = forestTileCount;
+            selected = ForestKingdomNames;
         }
-        else if (forestTileCount > desertTileCount && forestTileCount > mountainTileCount && forestTileCount > snowTileCount)
+        if (mountainTileCount > max)
         {
-            return ForestKingdomNames;
+            max = mountainTileCount;
+            selected = MountainKingdomNames;
         }
-        else if (mountainTileCount > desertTileCount && mountainTileCount > forestTileCount && mountainTileCount > snowTileCount)
+        if (snowTileCount > max)
         {
-            return MountainKingdomNames;
+            max = snowTileCount;
+            selected = SnowKingdomNames;
         }
-        else
+        if (plainsTileCount > max)
         {
-            return SnowKingdomNames;
+            max = plainsTileCount;
+            selected = PlainsKingdomNames;
         }
+        if (swampTileCount > max)
+        {
+            max = swampTileCount;
+            selected = SwampKingdomNames;
+        }
+        if (jungleTileCount > max)
+        {
+            selected = JungleKingdomNames;
+        }
+
+        return selected;
     }
     private string GetRandomKingdomName()
     {
