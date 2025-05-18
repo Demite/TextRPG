@@ -21,7 +21,10 @@ public class WorldTile
         Mountain,
         Forest,
         Desert,
-        Snow
+        Snow,
+        Plains,
+        Swamp,
+        Jungle
     }
     public enum POIType
     { 
