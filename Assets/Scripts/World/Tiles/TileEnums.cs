@@ -6,6 +6,9 @@ public class TileEnums
     {
         Forest,
         Desert,
+        Plains,
+        Swamp,
+        Jungle,
         Mountain,
         Snow,
         Water,
