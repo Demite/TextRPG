@@ -33,6 +33,7 @@ public class Farm : KingdomTile
             tile.IsPOI = true;
             tile.POI = WorldTile.POIType.Farm;
             setFertility(tile);
+            tile.UpdateBaseDisplayString();
         }
         Type = KingdomTileType.Farm;
         kingdomOwner.KingdomTiles.Add(this);
@@ -51,6 +52,7 @@ public class Farm : KingdomTile
             tile.IsPOI = true;
             tile.POI = WorldTile.POIType.Farm;
             setFertility(tile);
+            tile.UpdateBaseDisplayString();
         }
         Type = KingdomTileType.Farm;
         kingdomOwner.KingdomTiles.Add(this);
@@ -66,6 +68,7 @@ public class Farm : KingdomTile
             tile.IsPOI = true;
             tile.POI = WorldTile.POIType.Farm;
             setFertility(tile);
+            tile.UpdateBaseDisplayString();
         }
         Type = KingdomTileType.Farm;
     }
@@ -80,6 +83,7 @@ public class Farm : KingdomTile
             tile.IsPOI = true;
             tile.POI = WorldTile.POIType.Farm;
             setFertility(tile);
+            tile.UpdateBaseDisplayString();
         }
         TownInfluencer = town;
         Type = KingdomTileType.Farm;
