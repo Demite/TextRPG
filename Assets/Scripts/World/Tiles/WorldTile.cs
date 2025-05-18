@@ -175,62 +175,6 @@ public class WorldTile
             }
         }
     }
-
-    public void UpdateBaseDisplayString()
-    {
-        if (IsPOI || IsRoad)
-        {
-            switch (POI)
-            {
-                case POIType.Mine:
-                    BaseDisplayString = $"<color={TextAtlas.Mine}>{TextAtlas.mineChar}</color>";
-                    break;
-                case POIType.AbandonedMine:
-                    BaseDisplayString = $"<color={TextAtlas.AbandonMine}>{TextAtlas.abandonedMineChar}</color>";
-                    break;
-                case POIType.Farm:
-                    BaseDisplayString = $"<color={TextAtlas.Farm}>{TextAtlas.farmChar}</color>";
-                    break;
-                case POIType.Town:
-                    BaseDisplayString = $"<color={TextAtlas.Town}>{TextAtlas.townChar}</color>";
-                    break;
-                case POIType.Road:
-                    BaseDisplayString = $"<color={TextAtlas.Road}>{TextAtlas.roadChar}</color>";
-                    break;
-                case POIType.Border:
-                    BaseDisplayString = $"<color={TextAtlas.Border}>{TextAtlas.borderChar}</color>";
-                    break;
-                default:
-                    BaseDisplayString = TextAtlas.forest.ToString();
-                    break;
-            }
-        }
-        else
-        {
-            switch (TileType)
-            {
-                case WorldTileType.Water:
-                    BaseDisplayString = $"<color={TextAtlas.water}>{TextAtlas.waterChar}</color>";
-                    break;
-                case WorldTileType.Desert:
-                    BaseDisplayString = $"<color={TextAtlas.desert}>{TextAtlas.desertChar}</color>";
-                    break;
-                case WorldTileType.Forest:
-                    BaseDisplayString = $"<color={TextAtlas.forest}>{TextAtlas.forestChar}</color>";
-                    break;
-                case WorldTileType.Mountain:
-                    BaseDisplayString = $"<color={TextAtlas.mountain}>{TextAtlas.mountainChar}</color>";
-                    break;
-                case WorldTileType.Snow:
-                    BaseDisplayString = $"<color={TextAtlas.snow}>{TextAtlas.snowChar}</color>";
-                    break;
-                default:
-                    BaseDisplayString = $"<color={TextAtlas.forest}>{TextAtlas.forestChar}</color>";
-                    break;
-            }
-        }
-    }
-
     bool SetTransversable(WorldTileType type)
     {
         if (type == WorldTileType.Water || type == WorldTileType.Mountain)
