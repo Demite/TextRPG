@@ -172,6 +172,15 @@ public class WorldTile
                 case WorldTileType.Snow:
                     BaseDisplayString = $"<color={TextAtlas.snow}>{TextAtlas.snowChar}</color>";
                     break;
+                case WorldTileType.Plains:
+                    BaseDisplayString = $"<color={TextAtlas.plains}>{TextAtlas.plainsChar}</color>";
+                    break;
+                case WorldTileType.Swamp:
+                    BaseDisplayString = $"<color={TextAtlas.swamp}>{TextAtlas.swampChar}</color>";
+                    break;
+                case WorldTileType.Jungle:
+                    BaseDisplayString = $"<color={TextAtlas.jungle}>{TextAtlas.jungleChar}</color>";
+                    break;
                 default:
                     BaseDisplayString = $"<color={TextAtlas.forest}>{TextAtlas.forestChar}</color>";
                     break;
