@@ -21,6 +21,9 @@
     public static readonly string forest = "#228B22";      // Green
     public static readonly string desert = "#FFD700";      // Yellow
     public static readonly string snow = "#FFFFFF";        // White
+    public static readonly string plains = "#9ACD32";      // YellowGreen
+    public static readonly string swamp = "#556B2F";       // DarkOliveGreen
+    public static readonly string jungle = "#006400";      // DarkGreen
 
     // Forest Floor Tiles Characters
     public static readonly string ForestFloorLushChar = ".";
@@ -36,6 +39,9 @@
     public static readonly char forestChar = '*';
     public static readonly char desertChar = '-';
     public static readonly char snowChar = '+';
+    public static readonly char plainsChar = '.';
+    public static readonly char swampChar = '%';
+    public static readonly char jungleChar = '@';
     public static readonly char townChar = '¶';
     public static readonly char mineChar = '⌂';
     public static readonly char abandonedMineChar = '⌂';
