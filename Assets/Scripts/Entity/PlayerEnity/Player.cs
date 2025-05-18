@@ -33,7 +33,12 @@ public class Player : PlayerBase
         {
             if (worldData.WorldTileData.TryGetValue(entityWorldPos, out WorldTile currentTile))
             {
-                LevelGen generator = new LevelGen();
+                LevelGen generator = Game_Manager.Instance.levelGen;
+                if (generator == null)
+                {
+                    Debug.LogError("LevelGen not assigned!");
+                    return;
+                }
                 Game_Manager.Instance.PlayerLoadingIntoBiome = true;
 
                 switch (currentTile.TileType)
