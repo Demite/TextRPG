@@ -144,10 +144,8 @@ public class Game_Manager : MonoBehaviour
         }
         foreach (var tile in worldData.WorldTileData)
         {
-            if (tile.Value.TileType == WorldTile.WorldTileType.Forest ||
-                tile.Value.TileType == WorldTile.WorldTileType.Desert)
+            if (tile.Value.IsTileTransversable)
             {
-                // Use tile.Key directly or create a new instance if needed.
                 tilesList.Add(new WorldTilePos(tile.Key.x, tile.Key.y));
             }
         }
