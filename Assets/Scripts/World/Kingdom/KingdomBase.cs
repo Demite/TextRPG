@@ -162,6 +162,7 @@ public class KingdomBase
                     Debug.Log($"Added: {roadPath.Count} roads to the world data.");
                     tile.IsPOI = false; // Roads are not POIs During world gen we will grab the tile type for the surrounding area.
                     tile.IsRoad = true;
+                    tile.UpdateBaseDisplayString();
                 }
             }
             Game_Manager.Instance.displayPanels.loadingtext.text = $"Road from {capital.TownName} to {town.TownName} generated.";

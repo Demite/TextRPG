@@ -295,6 +295,7 @@ public class WorldGen : MonoBehaviour
                         ctile.IsTileTransversable = true;
                         ctile.IsPOI = true;
                         ctile.POI = WorldTile.POIType.Town;
+                        ctile.UpdateBaseDisplayString();
                         TownCapital.TownLocation = townTile;
                         TownCapital.IsCapital = true;
                         CapitalSet = true;
@@ -310,6 +311,7 @@ public class WorldGen : MonoBehaviour
                     tile.IsTileTransversable = false;
                     tile.IsPOI = true;
                     tile.POI = WorldTile.POIType.Town;
+                    tile.UpdateBaseDisplayString();
                     town.TownLocation = townTile;
 
                     Game_Manager.Instance.displayPanels.UpdateLoadingText($"Generating Towns");
@@ -587,6 +589,7 @@ public class WorldGen : MonoBehaviour
                         {
                             tile.IsBorder = true;
                             tile.POI = WorldTile.POIType.Border;
+                            tile.UpdateBaseDisplayString();
                             break;
                         }
                     }

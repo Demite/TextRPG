@@ -30,46 +30,22 @@ public class WorldDisplay : Display
     {
         if (Game_Manager.Instance.player.IsInWorld)
         {
-            StringBuilder worldBuilder = new StringBuilder();
-
-            for (int row = 0; row < rows; row++)
-            {
-                for (int col = 0; col < columns; col++)
+            BuildDisplay<WorldTilePos>(
+                (x, y) => new WorldTilePos(x, y),
+                pos =>
                 {
-                    int worldX = currentViewPos.x + col;
-                    int worldY = currentViewPos.y + row;
-                    WorldTilePos posKey = new WorldTilePos(worldX, worldY);
-
-                    string displayChar = " "; // default
-
-                    if (worldData.WorldTileData.TryGetValue(posKey, out WorldTile tile))
+                    if (tileOverrides.TryGetValue(pos, out string ov))
+                        return ov;
+                    if (worldData.WorldTileData.TryGetValue(pos, out WorldTile tile))
                     {
-                        if (tileOverrides.TryGetValue(posKey, out string overrideDisplay))
+                        if (tile.HasEntityOnTile && tile.EntityOnTile != null)
                         {
-                            displayChar = overrideDisplay;
+                            return $"<color={tile.EntityOnTile.entitySymbolColor}>{tile.EntityOnTile.EntitySymbol}</color>";
                         }
-                        else
-                        {
-                            if (tile.HasEntityOnTile && tile.EntityOnTile != null)
-                            {
-                                displayChar = $"<color={tile.EntityOnTile.entitySymbolColor}>{tile.EntityOnTile.EntitySymbol}</color>";
-                            }
-                            else
-                            {
-                                displayChar = GetTileDisplay(tile);
-                            }
-                        }
+                        return GetTileDisplay(tile);
                     }
-
-                    worldBuilder.Append(displayChar);
-                }
-                if (row < rows - 1)
-                {
-                    worldBuilder.AppendLine();
-                }
-            }
-
-            DisplayText.text = worldBuilder.ToString();
+                    return " ";
+                });
         }
     }
 }

@@ -34,6 +34,9 @@ public class LevelTile
     public bool IsOccupiedByAttribute = false; // Not All Attributes are bad. Some are good.
     public bool IsOccupiedByBuilding = false;
 
+    // Cached base display string
+    public string BaseDisplayString { get; private set; }
+
     /// <summary>
     /// 
     /// </summary>
@@ -49,12 +52,49 @@ public class LevelTile
         { TileZ = 0; }
         MyPosition = new LevelPOS(x, y, z);
         MyParentsPosition = new WorldTilePos(x, y);
+
+        UpdateBaseDisplayString();
     }
     public LevelTile() { }
+
+    public void UpdateBaseDisplayString()
+    {
+        if (Biome == TileEnums.LevelTileBiome.Forest)
+        {
+            switch (ForestTileType)
+            {
+                case TileEnums.ForestTiles.LushFloor:
+                    BaseDisplayString = $"<color={TextAtlas.ForestFloorLush}>{TextAtlas.ForestFloorLushChar}</color>";
+                    break;
+                case TileEnums.ForestTiles.DirtFloor:
+                    BaseDisplayString = $"<color={TextAtlas.ForestFloorDirt}>{TextAtlas.ForestFloorDirtChar}</color>";
+                    break;
+                case TileEnums.ForestTiles.GrassFloor:
+                    BaseDisplayString = $"<color={TextAtlas.ForestFloorGrass}>{TextAtlas.ForestFloorGrassChar}</color>";
+                    break;
+                case TileEnums.ForestTiles.MudFloor:
+                    BaseDisplayString = $"<color={TextAtlas.ForestFloorMud}>{TextAtlas.ForestFloorMudChar}</color>";
+                    break;
+                case TileEnums.ForestTiles.LeavesFloor:
+                    BaseDisplayString = $"<color={TextAtlas.ForestFloorLeaves}>{TextAtlas.ForestFloorLeavesChar}</color>";
+                    break;
+                case TileEnums.ForestTiles.RockyGroundFloor:
+                    BaseDisplayString = $"<color={TextAtlas.ForestFloorRockyGround}>{TextAtlas.ForestFloorRockyGroundChar}</color>";
+                    break;
+                default:
+                    BaseDisplayString = $"<color={TextAtlas.ForestFloorLush}>{TextAtlas.ForestFloorLushChar}</color>";
+                    break;
+            }
+        }
+        else
+        {
+            BaseDisplayString = $"<color={TextAtlas.forest}>{TextAtlas.forestChar}</color>";
+        }
+    }
 }
 
 
-public class LevelPOS : IEquatable<LevelPOS>
+public struct LevelPOS : IEquatable<LevelPOS>
 {
     public readonly int x;
     public readonly int y;
@@ -78,7 +118,7 @@ public class LevelPOS : IEquatable<LevelPOS>
 
     public bool Equals(LevelPOS other)
     {
-        return other != null && this.x == other.x && this.y == other.y;
+        return this.x == other.x && this.y == other.y;
     }
 
     public override int GetHashCode()
@@ -94,10 +134,6 @@ public class LevelPOS : IEquatable<LevelPOS>
 
     public static bool operator ==(LevelPOS left, LevelPOS right)
     {
-        if (ReferenceEquals(left, right))
-            return true;
-        if (left is null || right is null)
-            return false;
         return left.Equals(right);
     }
 

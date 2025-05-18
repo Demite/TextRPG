@@ -41,13 +41,10 @@ public class Display : MonoBehaviour
         });
     }
 
-    /// <summary>
-    /// Rebuilds the entire ASCII display from the current view.
-    /// </summary>
-    public virtual void BuildWorldDisplay()
+    protected void BuildDisplay<TPos>(System.Func<int, int, TPos> createPos, System.Func<TPos, string> getDisplay)
     {
-        Debug.Log($"Building display with view position: {currentViewPos.x}, {currentViewPos.y}");
-        StringBuilder worldBuilder = new StringBuilder();
+        int estimatedCapacity = rows * (columns + 1);
+        StringBuilder builder = new StringBuilder(estimatedCapacity);
 
         for (int row = 0; row < rows; row++)
         {
@@ -55,40 +52,41 @@ public class Display : MonoBehaviour
             {
                 int worldX = currentViewPos.x + col;
                 int worldY = currentViewPos.y + row;
-                WorldTilePos posKey = new WorldTilePos(worldX, worldY);
-
-                string displayChar = " "; // default
-
-                if (worldData.WorldTileData.TryGetValue(posKey, out WorldTile tile))
-                {
-                    // Use an override if available.
-                    if (tileOverrides.TryGetValue(posKey, out string overrideDisplay))
-                    {
-                        displayChar = overrideDisplay;
-                    }
-                    else
-                    {
-                        // If an entity is on the tile, show its symbol.
-                        if (tile.HasEntityOnTile && tile.EntityOnTile != null)
-                        {
-                            displayChar = $"<color={tile.EntityOnTile.entitySymbolColor}>{tile.EntityOnTile.EntitySymbol}</color>";
-                        }
-                        else
-                        {
-                            displayChar = GetTileDisplay(tile);
-                        }
-                    }
-                }
-
-                worldBuilder.Append(displayChar);
+                TPos pos = createPos(worldX, worldY);
+                builder.Append(getDisplay(pos));
             }
             if (row < rows - 1)
             {
-                worldBuilder.AppendLine();
+                builder.AppendLine();
             }
         }
 
-        DisplayText.text = worldBuilder.ToString();
+        DisplayText.text = builder.ToString();
+    }
+
+    /// <summary>
+    /// Rebuilds the entire ASCII display from the current view.
+    /// </summary>
+    public virtual void BuildWorldDisplay()
+    {
+        Debug.Log($"Building display with view position: {currentViewPos.x}, {currentViewPos.y}");
+
+        BuildDisplay<WorldTilePos>(
+            (x, y) => new WorldTilePos(x, y),
+            pos =>
+            {
+                if (tileOverrides.TryGetValue(pos, out string ov))
+                    return ov;
+                if (worldData.WorldTileData.TryGetValue(pos, out WorldTile tile))
+                {
+                    if (tile.HasEntityOnTile && tile.EntityOnTile != null)
+                    {
+                        return $"<color={tile.EntityOnTile.entitySymbolColor}>{tile.EntityOnTile.EntitySymbol}</color>";
+                    }
+                    return GetTileDisplay(tile);
+                }
+                return " ";
+            });
     }
 
     /// <summary>
@@ -96,42 +94,11 @@ public class Display : MonoBehaviour
     /// </summary>
     protected string GetTileDisplay(WorldTile tile)
     {
-        if (tile.IsPOI || tile.IsRoad)
+        if (string.IsNullOrEmpty(tile.BaseDisplayString))
         {
-            switch (tile.POI)
-            {
-                case WorldTile.POIType.Mine:
-                    Debug.Log("Mine BB1");
-                    return $"<color={TextAtlas.Mine}>{TextAtlas.mineChar}</color>";
-                case WorldTile.POIType.AbandonedMine:
-                    return $"<color={TextAtlas.AbandonMine}>{TextAtlas.abandonedMineChar}</color>";
-                case WorldTile.POIType.Farm:
-                    return $"<color={TextAtlas.Farm}>{TextAtlas.farmChar}</color>";
-                case WorldTile.POIType.Town:
-                    return $"<color={TextAtlas.Town}>{TextAtlas.townChar}</color>";
-                case WorldTile.POIType.Road:
-                    return $"<color={TextAtlas.Road}>{TextAtlas.roadChar}</color>";
-                case WorldTile.POIType.Border:
-                    return $"<color={TextAtlas.Border}>{TextAtlas.borderChar}</color>";
-                default:
-                    return TextAtlas.forest.ToString();
-            }
+            tile.UpdateBaseDisplayString();
         }
-        switch (tile.TileType)
-        {
-            case WorldTile.WorldTileType.Water:
-                return $"<color={TextAtlas.water}>{TextAtlas.waterChar}</color>";
-            case WorldTile.WorldTileType.Desert:
-                return $"<color={TextAtlas.desert}>{TextAtlas.desertChar}</color>";
-            case WorldTile.WorldTileType.Forest:
-                return $"<color={TextAtlas.forest}>{TextAtlas.forestChar}</color>";
-            case WorldTile.WorldTileType.Mountain:
-                return $"<color={TextAtlas.mountain}>{TextAtlas.mountainChar}</color>";
-            case WorldTile.WorldTileType.Snow:
-                return $"<color={TextAtlas.snow}>{TextAtlas.snowChar}</color>";
-            default:
-                return $"<color={TextAtlas.forest}>{TextAtlas.forest}</color>";
-        }
+        return tile.BaseDisplayString;
     }
 
     /// <summary>
@@ -139,27 +106,11 @@ public class Display : MonoBehaviour
     /// </summary>
     protected string GetTileDisplay(LevelTile tile)
     {
-        if (tile.Biome == TileEnums.LevelTileBiome.Forest)
+        if (string.IsNullOrEmpty(tile.BaseDisplayString))
         {
-            switch (tile.ForestTileType)
-            {
-                case TileEnums.ForestTiles.LushFloor:
-                    return $"<color={TextAtlas.ForestFloorLush}>{TextAtlas.ForestFloorLushChar}</color>";
-                case TileEnums.ForestTiles.DirtFloor:
-                    return $"<color={TextAtlas.ForestFloorDirt}>{TextAtlas.ForestFloorDirtChar}</color>";
-                case TileEnums.ForestTiles.GrassFloor:
-                    return $"<color={TextAtlas.ForestFloorGrass}>{TextAtlas.ForestFloorGrassChar}</color>";
-                case TileEnums.ForestTiles.MudFloor:
-                    return $"<color={TextAtlas.ForestFloorMud}>{TextAtlas.ForestFloorMudChar}</color>";
-                case TileEnums.ForestTiles.LeavesFloor:
-                    return $"<color={TextAtlas.ForestFloorLeaves}>{TextAtlas.ForestFloorLeavesChar}</color>";
-                case TileEnums.ForestTiles.RockyGroundFloor:
-                    return $"<color={TextAtlas.ForestFloorRockyGround}>{TextAtlas.ForestFloorRockyGroundChar}</color>";
-                default:
-                    return $"<color={TextAtlas.ForestFloorLush}>{TextAtlas.ForestFloorLushChar}</color>";
-            }
+            tile.UpdateBaseDisplayString();
         }
-        return $"<color={TextAtlas.forest}>{TextAtlas.forestChar}</color>";
+        return tile.BaseDisplayString;
     }
 
     public void SetTileOverride(WorldTilePos pos, string symbol)

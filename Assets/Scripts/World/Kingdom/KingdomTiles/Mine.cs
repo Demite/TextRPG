@@ -25,6 +25,7 @@ public class Mine : KingdomTile
             tile.IsTileTransversable = false;
             tile.IsPOI = true;
             tile.POI = WorldTile.POIType.Mine;
+            tile.UpdateBaseDisplayString();
         }
         Type = KingdomTileType.Mine;
         kingdomOwner.KingdomTiles.Add(this);
@@ -43,6 +44,7 @@ public class Mine : KingdomTile
             tile.IsTileTransversable = false;
             tile.IsPOI = true;
             tile.POI = WorldTile.POIType.Mine;
+            tile.UpdateBaseDisplayString();
         }
         Type = KingdomTileType.Mine;
         kingdomOwner.KingdomTiles.Add(this);
@@ -59,6 +61,7 @@ public class Mine : KingdomTile
             tile.IsTileTransversable = false;
             tile.IsPOI = true;
             tile.POI = WorldTile.POIType.Mine;
+            tile.UpdateBaseDisplayString();
         }
         Type = KingdomTileType.Mine;
     }
@@ -74,6 +77,7 @@ public class Mine : KingdomTile
             tile.IsTileTransversable = false;
             tile.IsPOI = true;
             tile.POI = WorldTile.POIType.Mine;
+            tile.UpdateBaseDisplayString();
         }
         TownInfluencer = town;
         Type = KingdomTileType.Mine;
