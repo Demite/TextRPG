@@ -40,19 +40,7 @@ public class Player : PlayerBase
                     return;
                 }
                 Game_Manager.Instance.PlayerLoadingIntoBiome = true;
-
-                switch (currentTile.TileType)
-                {
-                    case WorldTile.WorldTileType.Forest:
-                        generator.GenerateForestLevel(currentTile);
-                        break;
-                    case WorldTile.WorldTileType.Swamp:
-                        generator.GenerateSwampLevel(currentTile);
-                        break;
-                    case WorldTile.WorldTileType.Jungle:
-                        generator.GenerateJungleLevel(currentTile);
-                        break;
-                }
+                generator.GenerateLevelForTile(currentTile);
             }
             Debug.Log($"Player pressed G to load into a biome at {entityWorldPos.x},{entityWorldPos.y}.");
         }
@@ -200,6 +188,7 @@ public class Player : PlayerBase
                 CenterDisplayOnPlayerInWorldView();
                 Game_Manager.Instance.worldData.InactiveLevelData = Game_Manager.Instance.worldData.ActiveLevelData;
                 Game_Manager.Instance.worldData.ActiveLevelData.Clear(); // Clear Level data
+                Game_Manager.Instance.displayPanels.UpdateViewMode("World");
             }
         }
         // Teleport to a random town.

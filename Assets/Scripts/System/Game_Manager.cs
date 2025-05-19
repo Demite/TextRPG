@@ -126,6 +126,7 @@ public class Game_Manager : MonoBehaviour
         displayPanels.GameDisplay.SetActive(true);
         displayPanels.GameView.SetActive(true);
         worldDisplay.BuildWorldDisplay();
+        displayPanels.UpdateViewMode("World");
     }
     private IEnumerator ScreenTimerCoroutine()
     {
@@ -196,6 +197,7 @@ public class Game_Manager : MonoBehaviour
                 levelDisplay.BuildWorldDisplay();
                 Debug.Log($"Player Location {player.entityLevelPos.x}, {player.entityLevelPos.y}, Spawned location {PlayerLevelSpawnLocation.x}, {PlayerLevelSpawnLocation.y}");
                 player.CenterDisplayOnPlayerInLevelView();
+                displayPanels.UpdateViewMode("Level");
                 PlayerLoadingIntoBiome = false;
             }
             else
@@ -220,6 +222,7 @@ public class Game_Manager : MonoBehaviour
                 levelDisplay.BuildWorldDisplay();
                 Debug.Log($"Player Location {player.entityLevelPos.x}, {player.entityLevelPos.y}, Spawned location {PlayerLevelSpawnLocation.x}, {PlayerLevelSpawnLocation.y}");
                 player.CenterDisplayOnPlayerInLevelView();
+                displayPanels.UpdateViewMode("Level");
                 PlayerLoadingIntoTown = false;
             }
             else
