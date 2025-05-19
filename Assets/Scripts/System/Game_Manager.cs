@@ -77,6 +77,15 @@ public class Game_Manager : MonoBehaviour
         FullSimulatedTurns = new List<IEntity>();
         EntitiesInGame = new List<IEntity>();
         worldGen = GetComponent<WorldGen>();
+
+        if (levelGen == null)
+        {
+            levelGen = GetComponent<LevelGen>();
+            if (levelGen == null)
+            {
+                Debug.LogError("LevelGen component not found on GameManager!");
+            }
+        }
     }
 
     private void Update()
