@@ -31,7 +31,7 @@ public class WorldData : MonoBehaviour
     }
     public void AddTile(LevelTile tile, Dictionary<LevelPOS, LevelTile> data)
     {
-        var pos = new LevelPOS(tile.TileX, tile.TileY, tile.TileY);
+        var pos = new LevelPOS(tile.TileX, tile.TileY, tile.TileZ);
         if (!data.ContainsKey(pos))
         {
             data.Add(pos, tile);
