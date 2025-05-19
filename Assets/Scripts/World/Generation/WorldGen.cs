@@ -60,66 +60,7 @@ public class WorldGen : MonoBehaviour
     /// </summary>
     public IEnumerator GenerateWorldCoroutine()
     {
-        // --- WORLD TILE GENERATION ---
-        for (int y = 0; y < worldHeight; y++)
-        {
-            for (int x = 0; x < worldWidth; x++)
-            {
-                // Sample Perlin noise.
-                float sampleX = x / noiseScale;
-                float sampleY = y / noiseScale;
-                float noiseValue = Mathf.PerlinNoise(sampleX, sampleY);
-
-                // Determine the tile type based on noise thresholds.
-                WorldTile.WorldTileType tileType;
-                if (noiseValue < waterThreshold)
-                {
-                    tileType = WorldTile.WorldTileType.Water;
-                }
-                else if (noiseValue < desertThreshold)
-                {
-                    tileType = WorldTile.WorldTileType.Desert;
-                }
-                else if (noiseValue < plainsThreshold)
-                {
-                    tileType = WorldTile.WorldTileType.Plains;
-                }
-                else if (noiseValue < forestThreshold)
-                {
-                    tileType = WorldTile.WorldTileType.Forest;
-                }
-                else if (noiseValue < swampThreshold)
-                {
-                    tileType = WorldTile.WorldTileType.Swamp;
-                }
-                else if (noiseValue < jungleThreshold)
-                {
-                    tileType = WorldTile.WorldTileType.Jungle;
-                }
-                else if (noiseValue < mountainThreshold)
-                {
-                    tileType = WorldTile.WorldTileType.Mountain;
-                }
-                else
-                {
-                    tileType = WorldTile.WorldTileType.Snow;
-                }
-
-                // Create and add the tile to WorldData.
-                WorldTile tile = new WorldTile(x, y, tileType);
-                worldData.AddTile(tile);
-
-                // Update loading progress.
-                float percentComplete = (float)(y * worldWidth + x) / (worldWidth * worldHeight);
-                Game_Manager.Instance.displayPanels.UpdateLoadingText($"Generating World: {Mathf.RoundToInt(percentComplete * 100)}%");
-            }
-
-            // Yield every 50 rows to keep the game responsive.
-            if (y % 50 == 0)
-                yield return null;
-        }
-        Game_Manager.Instance.displayPanels.UpdateLoadingText("World Generation Complete");
-        yield return null;
+        yield return GenerateTiles();
 
         // --- REGION & KINGDOM GENERATION ---
         Game_Manager.Instance.displayPanels.UpdateLoadingText("Generating Regions and Kingdoms...");
@@ -136,13 +77,56 @@ public class WorldGen : MonoBehaviour
         Game_Manager.Instance.displayPanels.UpdateLoadingText("Finalizing World Data...");
         Thread.Sleep(1000);
 
-
         Game_Manager.Instance.GameGenerated = true;
-        //Game_Manager.Instance.CheckAllTilesForAnyRegionOwnership();
         yield return null;
 
         Game_Manager.Instance.displayPanels.UpdateLoadingText("World Generation is now completel. Please Wait Game is starting.");
 
+    }
+
+    private IEnumerator GenerateTiles()
+    {
+        for (int y = 0; y < worldHeight; y++)
+        {
+            for (int x = 0; x < worldWidth; x++)
+            {
+                float sampleX = x / noiseScale;
+                float sampleY = y / noiseScale;
+                float noiseValue = Mathf.PerlinNoise(sampleX, sampleY);
+
+                WorldTile.WorldTileType tileType = DetermineTileType(noiseValue);
+
+                WorldTile tile = new WorldTile(x, y, tileType);
+                worldData.AddTile(tile);
+
+                float percentComplete = (float)(y * worldWidth + x) / (worldWidth * worldHeight);
+                Game_Manager.Instance.displayPanels.UpdateLoadingText($"Generating World: {Mathf.RoundToInt(percentComplete * 100)}%");
+            }
+
+            if (y % 50 == 0)
+                yield return null;
+        }
+        Game_Manager.Instance.displayPanels.UpdateLoadingText("World Generation Complete");
+        yield return null;
+    }
+
+    private WorldTile.WorldTileType DetermineTileType(float noiseValue)
+    {
+        if (noiseValue < waterThreshold)
+            return WorldTile.WorldTileType.Water;
+        if (noiseValue < desertThreshold)
+            return WorldTile.WorldTileType.Desert;
+        if (noiseValue < plainsThreshold)
+            return WorldTile.WorldTileType.Plains;
+        if (noiseValue < forestThreshold)
+            return WorldTile.WorldTileType.Forest;
+        if (noiseValue < swampThreshold)
+            return WorldTile.WorldTileType.Swamp;
+        if (noiseValue < jungleThreshold)
+            return WorldTile.WorldTileType.Jungle;
+        if (noiseValue < mountainThreshold)
+            return WorldTile.WorldTileType.Mountain;
+        return WorldTile.WorldTileType.Snow;
     }
 
     /// <summary>

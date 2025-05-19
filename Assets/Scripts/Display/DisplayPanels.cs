@@ -36,6 +36,9 @@ public class DisplayPanels : MonoBehaviour
     public GameObject LoadingScreen;
     public TMP_Text loadingtext;
 
+    [Header("View Mode")]
+    public TMP_Text viewModeText;
+
     void OnEnable()
     {
         ChatLog.OnLogAdded += UpdateChatLog;
@@ -90,11 +93,20 @@ public class DisplayPanels : MonoBehaviour
             }
         });
         HostilePeaceButton.image.color = Color.green;
+        UpdateViewMode("World");
     }
 
     public void UpdateLoadingText(string text)
     {
         loadingtext.text = text;
+    }
+
+    public void UpdateViewMode(string mode)
+    {
+        if (viewModeText != null)
+        {
+            viewModeText.text = $"View: {mode}";
+        }
     }
     private void Update()
     {

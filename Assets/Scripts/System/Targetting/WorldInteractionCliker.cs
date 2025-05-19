@@ -76,7 +76,7 @@ public class WorldInteractionCliker : MonoBehaviour, IPointerClickHandler
                             if (tile.POI == WorldTile.POIType.Town)
                             {
                                 Game_Manager.Instance.PlayerLoadingIntoTown = true;
-                                generator.GenerateHumanTownLevel(tile);
+                                generator.GenerateLevelForTile(tile);
                             }
                         }
                     }
