@@ -17,8 +17,7 @@ public class LevelGen : MonoBehaviour
         {
             { WorldTile.WorldTileType.Forest, tile => new ForestTileGen(tile) },
             { WorldTile.WorldTileType.Swamp, tile => new SwampTileGen(tile) },
-            { WorldTile.WorldTileType.Jungle, tile => new JungleTileGen(tile) },
-            { WorldTile.WorldTileType.Town, tile => new HumanTownGen(tile, tile.TownOnTile) }
+            { WorldTile.WorldTileType.Jungle, tile => new JungleTileGen(tile) }
         };
     }
 
@@ -32,6 +31,15 @@ public class LevelGen : MonoBehaviour
 
     public void GenerateLevelForTile(WorldTile tile)
     {
+        // First check if this tile represents a town via POI or the IsTown flag
+        if (tile.POI == WorldTile.POIType.Town || tile.IsTown)
+        {
+            TileGenBase gen = new HumanTownGen(tile, tile.TownOnTile);
+            ConfigureGenerator(gen);
+            gen.GenerateLevel();
+            return;
+        }
+
         if (generatorMap.TryGetValue(tile.TileType, out var factory))
         {
             TileGenBase gen = factory(tile);
