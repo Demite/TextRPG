@@ -1,61 +1,52 @@
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class LevelGen : MonoBehaviour
 {
     // Screen display is 57 x 12. Having inflated level size for view scrolling and to allow for larger levels.
-    public int LevelX = 100; // Width    
-    public int LevelY = 100; // Hight 
+    public int LevelX = 100; // Width
+    public int LevelY = 100; // Height
     public int LevelZ = 1;
 
-    public void GenerateWorld()
+    private Dictionary<WorldTile.WorldTileType, Func<WorldTile, TileGenBase>> generatorMap;
+
+    private void Awake()
     {
-        // Generate the world layout here (e.g., deciding which type of level comes where)
+        generatorMap = new Dictionary<WorldTile.WorldTileType, Func<WorldTile, TileGenBase>>
+        {
+            { WorldTile.WorldTileType.Forest, tile => new ForestTileGen(tile) },
+            { WorldTile.WorldTileType.Swamp, tile => new SwampTileGen(tile) },
+            { WorldTile.WorldTileType.Jungle, tile => new JungleTileGen(tile) },
+            { WorldTile.WorldTileType.Town, tile => new HumanTownGen(tile, tile.TownOnTile) }
+        };
     }
 
-    public void GenerateForestLevel(WorldTile tile)
+    private void ConfigureGenerator(TileGenBase gen)
     {
-        // Create an instance of your ForestTileGen to generate a forest level.
-        ForestTileGen forestGen = new ForestTileGen(tile);
-        Debug.Log($"Number of available tree to spawn in the level: {forestGen.Trees.Count}.");
-        forestGen.TileSizeX = LevelX;
-        forestGen.TileSizeY = LevelY;
-        forestGen.TileSizeZ = LevelZ;
+        gen.TileSizeX = LevelX;
+        gen.TileSizeY = LevelY;
+        gen.TileSizeZ = LevelZ;
         Game_Manager.Instance.levelDisplay.SetLevelSize(LevelX, LevelY);
-        forestGen.GenerateLevel();
     }
 
-    public void GenerateSwampLevel(WorldTile tile)
+    public void GenerateLevelForTile(WorldTile tile)
     {
-        SwampTileGen swampGen = new SwampTileGen(tile);
-        swampGen.TileSizeX = LevelX;
-        swampGen.TileSizeY = LevelY;
-        swampGen.TileSizeZ = LevelZ;
-        Game_Manager.Instance.levelDisplay.SetLevelSize(LevelX, LevelY);
-        swampGen.GenerateLevel();
+        if (generatorMap.TryGetValue(tile.TileType, out var factory))
+        {
+            TileGenBase gen = factory(tile);
+            ConfigureGenerator(gen);
+            gen.GenerateLevel();
+        }
+        else
+        {
+            Debug.LogWarning($"No level generator for tile type {tile.TileType}");
+        }
     }
 
-    public void GenerateJungleLevel(WorldTile tile)
-    {
-        JungleTileGen jungleGen = new JungleTileGen(tile);
-        jungleGen.TileSizeX = LevelX;
-        jungleGen.TileSizeY = LevelY;
-        jungleGen.TileSizeZ = LevelZ;
-        Game_Manager.Instance.levelDisplay.SetLevelSize(LevelX, LevelY);
-        jungleGen.GenerateLevel();
-    }
-    public void GenerateHumanTownLevel(WorldTile tile)
-    {
-        // Create an instance of your HumanTownGen to generate a town level.
-        HumanTownGen humantown = new HumanTownGen(tile, tile.TownOnTile);
-        humantown.TileSizeX = LevelX;
-        humantown.TileSizeY = LevelY;
-        humantown.TileSizeZ = LevelZ;
-        Game_Manager.Instance.levelDisplay.SetLevelSize(LevelX, LevelY);
-        humantown.GenerateLevel();
-    }
-
-    void Start()
-    {
-    }
+    // Backwards compatibility methods
+    public void GenerateForestLevel(WorldTile tile) => GenerateLevelForTile(tile);
+    public void GenerateSwampLevel(WorldTile tile) => GenerateLevelForTile(tile);
+    public void GenerateJungleLevel(WorldTile tile) => GenerateLevelForTile(tile);
+    public void GenerateHumanTownLevel(WorldTile tile) => GenerateLevelForTile(tile);
 }
-
